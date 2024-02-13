@@ -39,12 +39,40 @@ public abstract class Animal {
 
     public void move() {
         // Logique de déplacement du mouton
-        int direction = random.nextInt(4); // 0: haut, 1: bas, 2: gauche, 3: droite
+        int direction = random.nextInt(8); // 0: haut, 1: bas, 2: gauche, 3: droite
         switch (direction) {
-            case 0: if (y > 0) y--; break;
-            case 1: if (y < Ecosystem.HEIGHT - 1) y++; break;
-            case 2: if (x > 0) x--; break;
-            case 3: if (x < Ecosystem.WIDTH - 1) x++; break;
+            case 0: if (y > 0) y--; break; // haut
+            case 1: if (y < Ecosystem.HEIGHT - 1) y++; break; // bas
+            case 2: if (x > 0) x--; break; // gauche
+            case 3: if (x < Ecosystem.WIDTH - 1) x++; break; // droite
+
+            // haut gauche
+            case 4: if (y > 0 && x > 0) {
+                x--;
+                y--;
+                break;
+            }
+
+            // haut droite
+            case 5: if (y > 0 && x < Ecosystem.WIDTH - 1) {
+                x++;
+                y--;
+                break;
+            }
+
+            // bas droite
+            case 6: if (y < Ecosystem.HEIGHT - 1 && x < Ecosystem.WIDTH - 1) {
+                x++;
+                y++;
+                break;
+            }
+
+            // bas gauche
+            case 7: if (y < Ecosystem.HEIGHT - 1 && x > 0) {
+                x--;
+                y++;
+                break;
+            }
         }
 
     }
