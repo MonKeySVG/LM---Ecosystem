@@ -6,9 +6,9 @@ public class Wolf extends Animal {
     public Wolf(int x, int y) {
         super(x, y);
 
-        this.lifespan = 7;
+        this.lifespan = 60;
 
-        this.maxFastingTime = 7;
+        this.maxFastingTime = 10;
     }
 
     public Wolf reproduce() {

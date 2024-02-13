@@ -6,7 +6,7 @@ public class Sheep extends Animal {
     public Sheep(int x, int y) {
 
         super(x, y);
-        this.lifespan = 5;
+        this.lifespan = 50;
 
         this.maxFastingTime = 5;
     }
