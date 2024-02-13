@@ -90,10 +90,22 @@ public class Main extends Application {
 
                 // Dessiner les animaux
                 if (universe[i][j] instanceof Wolf) {
-                    gc.setFill(Color.RED);
+                    Wolf wolf = (Wolf) universe[i][j];
+                    if (wolf.male) {
+                        gc.setFill(Color.PURPLE);
+                    } else {
+                        gc.setFill(Color.RED);
+                    }
+
                     gc.fillRect(i * 5, j * 5, 5, 5); // Dessiner un loup
                 } else if (universe[i][j] instanceof Sheep) {
-                    gc.setFill(Color.BLUE);
+                    Sheep sheep = (Sheep) universe[i][j];
+                    if (sheep.male) {
+                        gc.setFill(Color.BLUE);
+                    } else {
+                        gc.setFill(Color.LIGHTBLUE);
+                    }
+
                     gc.fillRect(i * 5, j * 5, 5, 5); // Dessiner un mouton
                 }
             }

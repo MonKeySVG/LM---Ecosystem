@@ -3,12 +3,16 @@ import java.util.Random;
 public abstract class Animal {
     protected int x;
     protected int y;
+    protected boolean male;
 
     private Random random = new Random();
 
     public Animal(int x, int y) {
         this.x = x;
         this.y = y;
+
+        // Donne un sexe au hasard à la création d'un animal
+        male = random.nextInt(2) == 0;
     }
 
     public void move() {
