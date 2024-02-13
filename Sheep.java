@@ -4,7 +4,9 @@ public class Sheep extends Animal {
 
     private Random random = new Random(); // Déclaration de la variable random
     public Sheep(int x, int y) {
+
         super(x, y);
+        this.lifespan = 50;
     }
 
     public Sheep reproduce() {
@@ -24,7 +26,8 @@ public class Sheep extends Animal {
         Grass grass = ecosystem.getGrassAt(x, y);
         if (grass != null && !grass.isEaten()) {
             grass.setEaten(true);
-
         }
+
+        this.lastEaten = 0;
     }
 }

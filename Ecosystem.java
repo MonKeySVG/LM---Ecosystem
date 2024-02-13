@@ -107,63 +107,74 @@ public class Ecosystem {
             for (int j = 0; j < universe[i].length; j++) {
                 if (universe[i][j] instanceof Sheep) {
                     Sheep sheep = (Sheep) universe[i][j];
-                    sheep.move();
+                    sheep.age();
 
-                    sheep.eatGrass(this);
+                    if (sheep.alive) {
+                        sheep.move();
 
-                    int newX = sheep.getX();
-                    int newY = sheep.getY();
-                    // Assurer que la nouvelle position est dans les limites de l'écosystème
-                    if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !cellLock[newX][newY]) {
-                        if (isCellEmpty(newX, newY)) {
-                            newUniverse[newX][newY] = sheep;
-                            cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
+                        sheep.eatGrass(this);
+
+                        int newX = sheep.getX();
+                        int newY = sheep.getY();
+                        // Assurer que la nouvelle position est dans les limites de l'écosystème
+                        if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !cellLock[newX][newY]) {
+                            if (isCellEmpty(newX, newY)) {
+                                newUniverse[newX][newY] = sheep;
+                                cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
+                            } else {
+                                newUniverse[i][j] = sheep; // Remettre le mouton à sa position actuelle
+                            }
                         } else {
                             newUniverse[i][j] = sheep; // Remettre le mouton à sa position actuelle
                         }
-                    } else {
-                        newUniverse[i][j] = sheep; // Remettre le mouton à sa position actuelle
-                    }
 
-                    if (sheep.hasAdjacentSheep(universe)) {
-                        Sheep newMouton = sheep.reproduce();
-                        // Vérifier si la cellule n'est pas déjà occupée
-                        if (newMouton.getX() >= 0 && newMouton.getX() < WIDTH && newMouton.getY() >= 0 && newMouton.getY() < HEIGHT && !cellLock[newMouton.getX()][newMouton.getY()]) {
-                            if (isCellEmpty(newMouton.getX(), newMouton.getY())) {
-                                newUniverse[newMouton.getX()][newMouton.getY()] = newMouton;
-                                numSheeps++;
+                        if (sheep.hasAdjacentSheep(universe)) {
+                            Sheep newMouton = sheep.reproduce();
+                            // Vérifier si la cellule n'est pas déjà occupée
+                            if (newMouton.getX() >= 0 && newMouton.getX() < WIDTH && newMouton.getY() >= 0 && newMouton.getY() < HEIGHT && !cellLock[newMouton.getX()][newMouton.getY()]) {
+                                if (isCellEmpty(newMouton.getX(), newMouton.getY())) {
+                                    newUniverse[newMouton.getX()][newMouton.getY()] = newMouton;
+                                    numSheeps++;
+                                }
                             }
                         }
                     }
+
+
                 }
 
                 if (universe[i][j] instanceof Wolf) {
                     Wolf wolf = (Wolf) universe[i][j];
-                    wolf.move();
-                    int newX = wolf.getX();
-                    int newY = wolf.getY();
-                    // Assurer que la nouvelle position est dans les limites de l'écosystème
-                    if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !cellLock[newX][newY]) {
-                        if (isCellEmpty(newX, newY)) {
-                            newUniverse[newX][newY] = wolf;
-                            cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
+                    wolf.age();
+
+                    if (wolf.alive) {
+                        wolf.move();
+                        int newX = wolf.getX();
+                        int newY = wolf.getY();
+                        // Assurer que la nouvelle position est dans les limites de l'écosystème
+                        if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !cellLock[newX][newY]) {
+                            if (isCellEmpty(newX, newY)) {
+                                newUniverse[newX][newY] = wolf;
+                                cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
+                            } else {
+                                newUniverse[i][j] = wolf; // Remettre le mouton à sa position actuelle
+                            }
                         } else {
                             newUniverse[i][j] = wolf; // Remettre le mouton à sa position actuelle
                         }
-                    } else {
-                        newUniverse[i][j] = wolf; // Remettre le mouton à sa position actuelle
-                    }
 
-                    if (wolf.hasAdjacentWolf(universe)) {
-                        Wolf newWolf = wolf.reproduce();
-                        // Vérifier si la cellule n'est pas déjà occupée
-                        if (newWolf.getX() >= 0 && newWolf.getX() < WIDTH && newWolf.getY() >= 0 && newWolf.getY() < HEIGHT && !cellLock[newWolf.getX()][newWolf.getY()]) {
-                            if (isCellEmpty(newWolf.getX(), newWolf.getY())) {
-                                newUniverse[newWolf.getX()][newWolf.getY()] = newWolf;
-                                numWolves++;
+                        if (wolf.hasAdjacentWolf(universe)) {
+                            Wolf newWolf = wolf.reproduce();
+                            // Vérifier si la cellule n'est pas déjà occupée
+                            if (newWolf.getX() >= 0 && newWolf.getX() < WIDTH && newWolf.getY() >= 0 && newWolf.getY() < HEIGHT && !cellLock[newWolf.getX()][newWolf.getY()]) {
+                                if (isCellEmpty(newWolf.getX(), newWolf.getY())) {
+                                    newUniverse[newWolf.getX()][newWolf.getY()] = newWolf;
+                                    numWolves++;
+                                }
                             }
                         }
                     }
+
                 }
             }
         }

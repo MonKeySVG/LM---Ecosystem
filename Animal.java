@@ -4,6 +4,11 @@ public abstract class Animal {
     protected int x;
     protected int y;
     protected boolean male;
+    protected boolean alive;
+    protected int age;
+    protected int lastEaten;
+
+    protected int lifespan;
 
     private Random random = new Random();
 
@@ -11,9 +16,26 @@ public abstract class Animal {
         this.x = x;
         this.y = y;
 
+        this.alive = true;
+
+        this.age = 0;
+
+        this.lastEaten = 0;
+
+
+
         // Donne un sexe au hasard à la création d'un animal
-        male = random.nextInt(2) == 0;
+        this.male = random.nextInt(2) == 0;
     }
+
+
+    public void age() {
+        this.age++;
+        if (age >= lifespan) {
+            this.alive = false;
+        }
+    }
+
 
     public void move() {
         // Logique de déplacement du mouton
