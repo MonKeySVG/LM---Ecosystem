@@ -11,6 +11,8 @@ public abstract class Animal {
     protected int lifespan;
     protected int maxFastingTime;
 
+
+
     private Random random = new Random();
 
     public Animal(int x, int y) {
@@ -84,6 +86,12 @@ public abstract class Animal {
         }
 
     }
+
+    public void die() {
+        Ecosystem.dropFertilizer(x, y);
+    }
+
+
 
     public boolean hasAdjacentSheep(Animal[][] ecosystem) {
         // Vérifiez si un mouton est présent sur une case adjacente

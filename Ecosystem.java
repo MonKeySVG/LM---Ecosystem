@@ -10,8 +10,8 @@ public class Ecosystem {
     private Random random = new Random();
 
     // Nombre initial de loups et de moutons
-    private static final int NUM_WOLVES = 40;
-    private static final int NUM_SHEEPS = 20;
+    private static final int NUM_WOLVES = 10;
+    private static final int NUM_SHEEPS = 10;
 
     private Grass[][] grass;
 
@@ -19,10 +19,13 @@ public class Ecosystem {
     private int numWolves;
     private int numSheeps;
 
+    static boolean[][] fertilizer;
+
     public Ecosystem(int width, int height) {
 
         // Nouvelle matrice contenant des éléments de type "Animal"
         universe = new Animal[width][height];
+        fertilizer = new boolean[width][height];
 
         numWolves = 0;
         numSheeps = 0;
@@ -37,6 +40,10 @@ public class Ecosystem {
                 grass[i][j] = new Grass();
             }
         }
+    }
+
+    static void dropFertilizer(int x, int y) {
+        fertilizer[x][y] = true;
     }
 
     // Méthode pour obtenir l'herbe à une position spécifique
@@ -105,6 +112,16 @@ public class Ecosystem {
 
         for (int i = 0; i < universe.length; i++) {
             for (int j = 0; j < universe[i].length; j++) {
+
+                // Vérifier si il y a des sels minéraux
+                if (fertilizer[i][j]) {
+                    fertilizer[i][j] = false;
+                    grass[i][j].grow();
+                }
+
+
+
+
                 if (universe[i][j] instanceof Sheep) {
                     Sheep sheep = (Sheep) universe[i][j];
                     sheep.age();
@@ -129,16 +146,18 @@ public class Ecosystem {
                             newUniverse[i][j] = sheep; // Remettre le mouton à sa position actuelle
                         }
 
-                        if (sheep.hasAdjacentSheep(universe)) {
-                            Sheep newMouton = sheep.reproduce();
+                        if (sheep.hasAdjacentSheep(universe) && random.nextInt(1) == 0) {
+                            Sheep newSheep = sheep.reproduce();
                             // Vérifier si la cellule n'est pas déjà occupée
-                            if (newMouton.getX() >= 0 && newMouton.getX() < WIDTH && newMouton.getY() >= 0 && newMouton.getY() < HEIGHT && !cellLock[newMouton.getX()][newMouton.getY()]) {
-                                if (isCellEmpty(newMouton.getX(), newMouton.getY())) {
-                                    newUniverse[newMouton.getX()][newMouton.getY()] = newMouton;
+                            if (newSheep.getX() >= 0 && newSheep.getX() < WIDTH && newSheep.getY() >= 0 && newSheep.getY() < HEIGHT && !cellLock[newSheep.getX()][newSheep.getY()]) {
+                                if (isCellEmpty(newSheep.getX(), newSheep.getY())) {
+                                    newUniverse[newSheep.getX()][newSheep.getY()] = newSheep;
                                     numSheeps++;
                                 }
                             }
                         }
+                    } else {
+                        sheep.die();
                     }
 
 
@@ -165,7 +184,7 @@ public class Ecosystem {
                             newUniverse[i][j] = wolf; // Remettre le mouton à sa position actuelle
                         }
 
-                        if (wolf.hasAdjacentWolf(universe)) {
+                        if (wolf.hasAdjacentWolf(universe) && random.nextInt(1) == 0) {
                             Wolf newWolf = wolf.reproduce();
                             // Vérifier si la cellule n'est pas déjà occupée
                             if (newWolf.getX() >= 0 && newWolf.getX() < WIDTH && newWolf.getY() >= 0 && newWolf.getY() < HEIGHT && !cellLock[newWolf.getX()][newWolf.getY()]) {
@@ -175,6 +194,8 @@ public class Ecosystem {
                                 }
                             }
                         }
+                    } else {
+                        wolf.die();
                     }
 
                 }
