@@ -30,6 +30,8 @@ public class Main extends Application {
 
 
 
+
+
     @Override
     public void start(Stage primaryStage) {
         ecosystem = new Ecosystem(100, 100);
@@ -44,6 +46,9 @@ public class Main extends Application {
 
         labelLoups = new Label("Nombre de loups: ");
         labelMoutons = new Label("Nombre de moutons: ");
+
+        labelLoups.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des loups
+        labelMoutons.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des moutons
 
         vbox.getChildren().addAll(labelLoups, labelMoutons);
         root.setRight(vbox);

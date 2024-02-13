@@ -11,7 +11,7 @@ public class Ecosystem {
     private Random random = new Random();
 
     // Nombre initial de loups et de moutons
-    private static final int NUM_WOLVES = 10;
+    private static final int NUM_WOLVES = 30;
     private static final int NUM_SHEEPS = 10;
 
     private Grass[][] grass;
