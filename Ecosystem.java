@@ -108,6 +108,7 @@ public class Ecosystem {
                 if (universe[i][j] instanceof Sheep) {
                     Sheep sheep = (Sheep) universe[i][j];
                     sheep.age();
+                    sheep.foodCheck();
 
                     if (sheep.alive) {
                         sheep.move();
@@ -146,6 +147,7 @@ public class Ecosystem {
                 if (universe[i][j] instanceof Wolf) {
                     Wolf wolf = (Wolf) universe[i][j];
                     wolf.age();
+                    wolf.foodCheck();
 
                     if (wolf.alive) {
                         wolf.move();

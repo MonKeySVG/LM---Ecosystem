@@ -7,6 +7,8 @@ public class Sheep extends Animal {
 
         super(x, y);
         this.lifespan = 50;
+
+        this.maxFastingTime = 5;
     }
 
     public Sheep reproduce() {

@@ -9,6 +9,7 @@ public abstract class Animal {
     protected int lastEaten;
 
     protected int lifespan;
+    protected int maxFastingTime;
 
     private Random random = new Random();
 
@@ -32,6 +33,13 @@ public abstract class Animal {
     public void age() {
         this.age++;
         if (age >= lifespan) {
+            this.alive = false;
+        }
+    }
+
+    public void foodCheck() {
+        lastEaten++;
+        if (this.lastEaten > this.maxFastingTime) {
             this.alive = false;
         }
     }
