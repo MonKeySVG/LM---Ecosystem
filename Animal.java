@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Animal {
@@ -121,6 +122,20 @@ public abstract class Animal {
             }
         }
         return false;
+    }
+
+    public ArrayList<Sheep> getAdjacentSheepsList(Animal[][] universe) {
+        ArrayList<Sheep> adjacentSheep = new ArrayList<>();
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (i >= 0 && i < Ecosystem.WIDTH && j >= 0 && j < Ecosystem.HEIGHT && !(i == x && j == y)) {
+                    if (universe[i][j] instanceof Sheep) {
+                        adjacentSheep.add((Sheep) universe[i][j]);
+                    }
+                }
+            }
+        }
+        return adjacentSheep;
     }
 
     // Getters pour x et y

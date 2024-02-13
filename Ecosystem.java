@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Ecosystem {
@@ -56,14 +57,6 @@ public class Ecosystem {
 
     public Grass[][] getGrass() {
         return grass;
-    }
-
-    public void makeGrassGrow() {
-        for (int i = 0; i < grass.length; i++) {
-            for (int j = 0; j < grass[i].length; j++) {
-                grass[i][j].grow();
-            }
-        }
     }
 
     // Vérifie si une case est libre
@@ -138,7 +131,7 @@ public class Ecosystem {
                         if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !cellLock[newX][newY]) {
                             if (isCellEmpty(newX, newY)) {
                                 newUniverse[newX][newY] = sheep;
-                                cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
+                                // cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
                             } else {
                                 newUniverse[i][j] = sheep; // Remettre le mouton à sa position actuelle
                             }
@@ -169,19 +162,28 @@ public class Ecosystem {
                     wolf.foodCheck();
 
                     if (wolf.alive) {
-                        wolf.move();
-                        int newX = wolf.getX();
-                        int newY = wolf.getY();
-                        // Assurer que la nouvelle position est dans les limites de l'écosystème
-                        if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !cellLock[newX][newY]) {
-                            if (isCellEmpty(newX, newY)) {
-                                newUniverse[newX][newY] = wolf;
-                                cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
+                        ArrayList<Sheep> adjacentSheeps = wolf.getAdjacentSheepsList(universe);
+                        if (!wolf.getAdjacentSheepsList(universe).isEmpty()) {
+                            Sheep chosenSheep = adjacentSheeps.get(random.nextInt(adjacentSheeps.size()));
+                            newUniverse[chosenSheep.x][chosenSheep.y] = wolf;
+                            wolf.lastEaten = 0;
+                        } else {
+                            wolf.move();
+                            int newX = wolf.getX();
+                            int newY = wolf.getY();
+                            // Assurer que la nouvelle position est dans les limites de l'écosystème
+                            if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !cellLock[newX][newY]) {
+                                if (isCellEmpty(newX, newY)) {
+                                    newUniverse[newX][newY] = wolf;
+                                    cellLock[newX][newY] = true; // Verrouiller la cellule pour éviter les déplacements simultanés
+                                } else {
+                                    newUniverse[i][j] = wolf; // Remettre le loup à sa position actuelle
+                                }
                             } else {
                                 newUniverse[i][j] = wolf; // Remettre le mouton à sa position actuelle
                             }
-                        } else {
-                            newUniverse[i][j] = wolf; // Remettre le mouton à sa position actuelle
+
+
                         }
 
                         if (wolf.hasAdjacentWolf(universe) && random.nextInt(1) == 0) {
@@ -194,6 +196,7 @@ public class Ecosystem {
                                 }
                             }
                         }
+
                     } else {
                         wolf.die();
                     }
