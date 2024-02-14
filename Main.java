@@ -10,8 +10,10 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
@@ -20,11 +22,13 @@ import javafx.geometry.Insets;
 
 public class Main extends Application {
 
+    private Scene menu, simulation;
+
     private Ecosystem ecosystem;
     private Canvas canvas;
     private long lastUpdateTime;
     private Label wolvesLabel;
-    private Label sheepsLable;
+    private Label sheepsLabel;
 
 
 
@@ -35,19 +39,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        // Ajout des éléments du menu
+        Button startButton = new Button("Start");
+        startButton.setOnAction(e -> primaryStage.setScene(simulation));
+        StackPane mainMenuLayout = new StackPane();
+        mainMenuLayout.getChildren().add(startButton);
+        menu = new Scene(mainMenuLayout, 800, 500);
 
 
 
 
-
-
-
-
-
-
-
-
-
+        // Ajout des éléments de la simulation
         ecosystem = new Ecosystem(100, 100);
         canvas = new Canvas(500, 500);
 
@@ -59,18 +61,21 @@ public class Main extends Application {
         vbox.setSpacing(5);
 
         wolvesLabel = new Label("Nombre de loups: ");
-        sheepsLable = new Label("Nombre de moutons: ");
+        sheepsLabel = new Label("Nombre de moutons: ");
 
         wolvesLabel.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des loups
-        sheepsLable.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des moutons
+        sheepsLabel.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des moutons
 
-        vbox.getChildren().addAll(wolvesLabel, sheepsLable);
+        vbox.getChildren().addAll(wolvesLabel, sheepsLabel);
         root.setRight(vbox);
 
-        Scene scene = new Scene(root, 800, 500);
-        scene.setFill(Color.LIGHTGRAY);
+        simulation = new Scene(root, 800, 500);
+        simulation.setFill(Color.LIGHTGRAY);
         primaryStage.setTitle("Simulation d'Écosystème");
-        primaryStage.setScene(scene);
+
+
+        // Scène de départ
+        primaryStage.setScene(menu);
         primaryStage.show();
 
         lastUpdateTime = System.nanoTime();
@@ -134,7 +139,7 @@ public class Main extends Application {
     private void updateValues() {
         // Mettre à jour les valeurs affichées en temps réel
         wolvesLabel.setText("Nombre de loups: " + ecosystem.getNumWolves());
-        sheepsLable.setText("Nombre de moutons: " + ecosystem.getNumSheeps());
+        sheepsLabel.setText("Nombre de moutons: " + ecosystem.getNumSheeps());
     }
 
     public static void main(String[] args) {
