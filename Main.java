@@ -23,8 +23,8 @@ public class Main extends Application {
     private Ecosystem ecosystem;
     private Canvas canvas;
     private long lastUpdateTime;
-    private Label labelLoups;
-    private Label labelMoutons;
+    private Label wolvesLabel;
+    private Label sheepsLable;
 
 
 
@@ -34,6 +34,20 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         ecosystem = new Ecosystem(100, 100);
         canvas = new Canvas(500, 500);
 
@@ -44,13 +58,13 @@ public class Main extends Application {
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(5);
 
-        labelLoups = new Label("Nombre de loups: ");
-        labelMoutons = new Label("Nombre de moutons: ");
+        wolvesLabel = new Label("Nombre de loups: ");
+        sheepsLable = new Label("Nombre de moutons: ");
 
-        labelLoups.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des loups
-        labelMoutons.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des moutons
+        wolvesLabel.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des loups
+        sheepsLable.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des moutons
 
-        vbox.getChildren().addAll(labelLoups, labelMoutons);
+        vbox.getChildren().addAll(wolvesLabel, sheepsLable);
         root.setRight(vbox);
 
         Scene scene = new Scene(root, 800, 500);
@@ -119,8 +133,8 @@ public class Main extends Application {
 
     private void updateValues() {
         // Mettre à jour les valeurs affichées en temps réel
-        labelLoups.setText("Nombre de loups: " + ecosystem.getNumWolves());
-        labelMoutons.setText("Nombre de moutons: " + ecosystem.getNumSheeps());
+        wolvesLabel.setText("Nombre de loups: " + ecosystem.getNumWolves());
+        sheepsLable.setText("Nombre de moutons: " + ecosystem.getNumSheeps());
     }
 
     public static void main(String[] args) {
