@@ -41,7 +41,6 @@ public class Main extends Application {
 
         // Ajout des éléments du menu
         Button startButton = new Button("Start");
-        startButton.setOnAction(e -> primaryStage.setScene(simulation));
         StackPane mainMenuLayout = new StackPane();
         mainMenuLayout.getChildren().add(startButton);
         menu = new Scene(mainMenuLayout, 800, 500);
@@ -78,20 +77,26 @@ public class Main extends Application {
         primaryStage.setScene(menu);
         primaryStage.show();
 
-        lastUpdateTime = System.nanoTime();
-
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (now - lastUpdateTime >= 1_000_000_000 / 2) { // 2 updates per second
-                    ecosystem.update();
-                    draw();
-                    updateValues(); // Mettre à jour les valeurs en temps réel
-                    lastUpdateTime = now;
+        // Gestionnaire d'événements du bouton "Start"
+        startButton.setOnAction(e -> {
+            primaryStage.setScene(simulation);
+            // Démarrage de la boucle d'animation ici
+            lastUpdateTime = System.nanoTime();
+            new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    if (now - lastUpdateTime >= 1_000_000_000 / 2) { // 2 mises a jour par secondes
+                        ecosystem.update();
+                        draw();
+                        updateValues(); // Mettre à jour les valeurs en temps réel
+                        lastUpdateTime = now;
+                    }
                 }
-            }
-        }.start();
+            }.start();
+        });
     }
+
+
 
 
     private void draw() {
