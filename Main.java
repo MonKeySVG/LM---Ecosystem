@@ -104,16 +104,19 @@ public class Main extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         Animal[][] universe = ecosystem.getUniverse();
         Grass[][] herbes = ecosystem.getGrass();
+
+        double tileSize = 500 / Ecosystem.HEIGHT;
+
         for (int i = 0; i < universe.length; i++) {
             for (int j = 0; j < universe[i].length; j++) {
 
                 // Dessiner l'état de l'herbe
                 if (herbes[i][j].isEaten()) {
                     gc.setFill(Color.WHITE);
-                    gc.fillRect(i * 5, j * 5, 5, 5);
+                    gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
                 } else {
                     gc.setFill(Color.GREEN);
-                    gc.fillRect(i * 5, j * 5, 5, 5);
+                    gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
                 }
 
 
@@ -126,7 +129,7 @@ public class Main extends Application {
                         gc.setFill(Color.RED);
                     }
 
-                    gc.fillRect(i * 5, j * 5, 5, 5); // Dessiner un loup
+                    gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize); // Dessiner un loup
                 } else if (universe[i][j] instanceof Sheep) {
                     Sheep sheep = (Sheep) universe[i][j];
                     if (sheep.male) {
@@ -135,7 +138,7 @@ public class Main extends Application {
                         gc.setFill(Color.LIGHTBLUE);
                     }
 
-                    gc.fillRect(i * 5, j * 5, 5, 5); // Dessiner un mouton
+                    gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize); // Dessiner un mouton
                 }
             }
         }

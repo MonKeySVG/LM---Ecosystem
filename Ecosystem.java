@@ -139,7 +139,7 @@ public class Ecosystem {
                             newUniverse[i][j] = sheep; // Remettre le mouton à sa position actuelle
                         }
 
-                        if (sheep.hasAdjacentSheep(universe) && random.nextInt(1) == 0) {
+                        if (sheep.hasAdjacentSheep(universe) && random.nextInt(10) == 0) {
                             Sheep newSheep = sheep.reproduce();
                             // Vérifier si la cellule n'est pas déjà occupée
                             if (newSheep.getX() >= 0 && newSheep.getX() < WIDTH && newSheep.getY() >= 0 && newSheep.getY() < HEIGHT && !cellLock[newSheep.getX()][newSheep.getY()]) {
@@ -186,7 +186,7 @@ public class Ecosystem {
 
                         }
 
-                        if (wolf.hasAdjacentWolf(universe) && random.nextInt(1) == 0) {
+                        if (wolf.hasAdjacentWolf(universe) && random.nextInt(10) == 0) {
                             Wolf newWolf = wolf.reproduce();
                             // Vérifier si la cellule n'est pas déjà occupée
                             if (newWolf.getX() >= 0 && newWolf.getX() < WIDTH && newWolf.getY() >= 0 && newWolf.getY() < HEIGHT && !cellLock[newWolf.getX()][newWolf.getY()]) {
