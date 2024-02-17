@@ -19,12 +19,15 @@ import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
+import javafx.scene.control.TextField;
+
+import static javafx.geometry.Pos.CENTER;
+
 
 public class Main extends Application {
 
     private Scene menu, simulation;
-
-    private Ecosystem ecosystem;
+    public Ecosystem ecosystem;
     private Canvas canvas;
     private long lastUpdateTime;
     private Label wolvesLabel;
@@ -41,15 +44,39 @@ public class Main extends Application {
 
         // Ajout des éléments du menu
         Button startButton = new Button("Start");
-        StackPane mainMenuLayout = new StackPane();
-        mainMenuLayout.getChildren().add(startButton);
-        menu = new Scene(mainMenuLayout, 800, 500);
+
+        TextField wolvesInput = new TextField(); // Champ de texte pour le nombre de loups
+        TextField sheepsInput = new TextField(); // Champ de texte pour le nombre de moutons
+        Label wolvesInputLabel = new Label("Nombre de loups : "); // Libellé pour le champ de texte des loups
+        Label sheepsInputLabel = new Label("Nombre de moutons : "); // Libellé pour le champ de texte des moutons
+
+
+        VBox menuLayout = new VBox(); // Utilisez un VBox pour organiser les éléments verticalement
+
+        VBox wolvesContainer = new VBox();
+        VBox sheepsContainer = new VBox();
+
+        wolvesContainer.getChildren().addAll(wolvesInputLabel, wolvesInput);
+        sheepsContainer.getChildren().addAll(sheepsInputLabel, sheepsInput);
+
+        wolvesContainer.setSpacing(10); // Espacement entre le libellé et le champ pour les loups
+        sheepsContainer.setSpacing(10); // Espacement entre le libellé et le champ pour les moutons
+
+        menuLayout.getChildren().addAll(wolvesContainer, sheepsContainer, startButton);
+
+        // Ajout de séparateurs et d'espacements
+        menuLayout.setSpacing(20); // Espacement entre les éléments
+        menuLayout.setPadding(new Insets(200)); // Espacement autour des éléments
+
+        menuLayout.setAlignment(CENTER); // Centrage des éléments dans le VBox
+
+        menu = new Scene(menuLayout, 800, 500);
 
 
 
 
         // Ajout des éléments de la simulation
-        ecosystem = new Ecosystem(100, 100);
+
         canvas = new Canvas(500, 500);
 
         BorderPane root = new BorderPane();
@@ -79,6 +106,16 @@ public class Main extends Application {
 
         // Gestionnaire d'événements du bouton "Start"
         startButton.setOnAction(e -> {
+            int numWolves = Integer.parseInt(wolvesInput.getText());
+            int numSheeps = Integer.parseInt(sheepsInput.getText());
+
+            // Mettre à jour les nombres de loups et de moutons dans Ecosystem
+            Ecosystem.setNumWolves(numWolves);
+            Ecosystem.setNumSheeps(numSheeps);
+
+            ecosystem = new Ecosystem(100, 100);
+
+
             primaryStage.setScene(simulation);
             // Démarrage de la boucle d'animation ici
             lastUpdateTime = System.nanoTime();
