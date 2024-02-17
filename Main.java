@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 
-import static javafx.geometry.Pos.CENTER;
+import static javafx.geometry.Pos.*;
 
 
 public class Main extends Application {
@@ -83,14 +83,17 @@ public class Main extends Application {
         root.setLeft(canvas);
 
         VBox vbox = new VBox();
+        vbox.setMinWidth(300);
+        vbox.setMaxWidth(300);
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(5);
+
 
         wolvesLabel = new Label("Nombre de loups: ");
         sheepsLabel = new Label("Nombre de moutons: ");
 
-        wolvesLabel.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des loups
-        sheepsLabel.setStyle("-fx-font-size: 26px;"); // Définir la taille de la police pour le label des moutons
+        wolvesLabel.setStyle("-fx-font-size: 20px;"); // Définir la taille de la police pour le label des loups
+        sheepsLabel.setStyle("-fx-font-size: 20px;"); // Définir la taille de la police pour le label des moutons
 
         vbox.getChildren().addAll(wolvesLabel, sheepsLabel);
         root.setRight(vbox);
