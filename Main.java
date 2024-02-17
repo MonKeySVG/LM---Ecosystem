@@ -7,14 +7,13 @@
 
 
 import javafx.application.Application;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
@@ -128,6 +127,9 @@ public class Main extends Application {
             }
         });
 
+        Button menuButton = new Button("Menu");
+
+
 
         // Box pour afficher le nombre d'animaux en temps réel
         VBox labelsVBox = new VBox();
@@ -138,18 +140,20 @@ public class Main extends Application {
         labelsVBox.setSpacing(5);
 
         labelsVBox.getChildren().addAll(wolvesLabel, sheepsLabel);
-        VBox speedSelectorVBox = new VBox();
-        speedSelectorVBox.setMinHeight(100);
-        speedSelectorVBox.getChildren().add(speedSelector);
-        speedSelectorVBox.setAlignment(BOTTOM_LEFT);
+        HBox bottomHBox = new HBox();
+        bottomHBox.setMinHeight(100);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        bottomHBox.getChildren().addAll(speedSelector, spacer, menuButton);
+        bottomHBox.setAlignment(BOTTOM_LEFT);
 
         VBox spaceVBox = new VBox();
         spaceVBox.setMinHeight(200);
         VBox mainVBox = new VBox();
-        mainVBox.getChildren().addAll(labelsVBox, spaceVBox, speedSelectorVBox);
+        mainVBox.getChildren().addAll(labelsVBox, spaceVBox, bottomHBox);
         mainVBox.setMinHeight(500);
         labelsVBox.setPadding(new Insets(10));
-        speedSelectorVBox.setPadding(new Insets(10));
+        bottomHBox.setPadding(new Insets(10));
         root.setRight(mainVBox);
 
         simulation = new Scene(root, 800, 500);
@@ -187,6 +191,10 @@ public class Main extends Application {
                     }
                 }
             }.start();
+        });
+
+        menuButton.setOnAction(e -> {
+            primaryStage.setScene(menu);
         });
     }
 

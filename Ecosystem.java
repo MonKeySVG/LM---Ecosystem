@@ -121,7 +121,7 @@ public class Ecosystem {
                     sheep.foodCheck();
 
                     if (sheep.alive) {
-                        sheep.move(universe);
+                        sheep.move();
 
                         sheep.eatGrass(this);
 
