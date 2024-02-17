@@ -20,6 +20,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 
 import static javafx.geometry.Pos.*;
 
@@ -32,6 +33,8 @@ public class Main extends Application {
     private long lastUpdateTime;
     private Label wolvesLabel;
     private Label sheepsLabel;
+
+    private int simulationSpeed = 2;
 
 
 
@@ -85,6 +88,8 @@ public class Main extends Application {
         VBox vbox = new VBox();
         vbox.setMinWidth(300);
         vbox.setMaxWidth(300);
+        vbox.setMinHeight(500);
+        vbox.setMaxHeight(500);
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(5);
 
@@ -95,7 +100,39 @@ public class Main extends Application {
         wolvesLabel.setStyle("-fx-font-size: 20px;"); // Définir la taille de la police pour le label des loups
         sheepsLabel.setStyle("-fx-font-size: 20px;"); // Définir la taille de la police pour le label des moutons
 
+        ComboBox<Integer> speedSelector = new ComboBox<>();
+        speedSelector.getItems().addAll(1, 2, 3, 4, 5, 6);
+        speedSelector.setValue(1);
+
+        speedSelector.setOnAction(e -> {
+            int selectedSpeed = speedSelector.getValue();
+            switch (selectedSpeed) {
+                case 1:
+                    simulationSpeed = 2;
+                    break;
+                case 2:
+                    simulationSpeed = 4;
+                    break;
+                case 3:
+                    simulationSpeed = 8;
+                    break;
+                case 4:
+                    simulationSpeed = 16;
+                    break;
+                case 5:
+                    simulationSpeed = 32;
+                    break;
+                case 6:
+                    simulationSpeed = 64;
+                    break;
+                default:
+                    simulationSpeed = 1;
+                    break;
+            }
+        });
+
         vbox.getChildren().addAll(wolvesLabel, sheepsLabel);
+        vbox.getChildren().add(speedSelector);
         root.setRight(vbox);
 
         simulation = new Scene(root, 800, 500);
@@ -125,7 +162,7 @@ public class Main extends Application {
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    if (now - lastUpdateTime >= 1_000_000_000 / 2) { // 2 mises a jour par secondes
+                    if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
                         ecosystem.update();
                         draw();
                         updateValues(); // Mettre à jour les valeurs en temps réel
