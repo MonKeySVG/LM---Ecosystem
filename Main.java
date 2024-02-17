@@ -11,16 +11,16 @@ import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ComboBox;
+
 import static javafx.geometry.Pos.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 public class Main extends Application {
@@ -46,9 +46,28 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        StackPane menuContainer = new StackPane();
+
+        ImageView backgroundImageView = new ImageView();
+
+        // Chargez l'image depuis un fichier ou une ressource
+        Image backgroundImage = new Image("assets/bg.jpg");
+
+        backgroundImageView.setImage(backgroundImage);
+
+        // Ajustez les propriétés de mise à l'échelle pour remplir tout l'arrière-plan du menu
+        backgroundImageView.fitWidthProperty().bind(primaryStage.widthProperty());
+        backgroundImageView.fitHeightProperty().bind(primaryStage.heightProperty());
+
+
+
+
+
+
+
+
         // Ajout des éléments du menu
         Button startButton = new Button("Start");
-        startButton.getStyleClass().add("button");
 
         TextField wolvesInput = new TextField(); // Champ de texte pour le nombre de loups
         wolvesInput.setText("250"); // Définit la valeur par défaut à "50"
@@ -57,37 +76,32 @@ public class Main extends Application {
         Label wolvesInputLabel = new Label("Nombre de loups : "); // Libellé pour le champ de texte des loups
         Label sheepsInputLabel = new Label("Nombre de moutons : "); // Libellé pour le champ de texte des moutons
 
-        Label wolvesMovement = new Label("Déplacement intelligent : ");
-        Label sheepsMovement = new Label("Déplacement intelligent : ");
-
-        ComboBox<String> wolvesMovementSelector = new ComboBox<>();
-        wolvesMovementSelector.getItems().addAll("Oui", "Non");
-        wolvesMovementSelector.setValue("Non");
-
-        ComboBox<String> sheepsMovementSelector = new ComboBox<>();
-        sheepsMovementSelector.getItems().addAll("Oui", "Non");
-        sheepsMovementSelector.setValue("Non");
+        wolvesInputLabel.getStyleClass().add("menuLabel");
+        sheepsInputLabel.getStyleClass().add("menuLabel");
 
 
-        HBox wolvesMovementBox = new HBox(wolvesMovement, wolvesMovementSelector);
-        HBox sheepsMovementBox = new HBox(sheepsMovement, sheepsMovementSelector);
+        CheckBox wolvesMovementCheckBox = new CheckBox("Déplacement intelligent");
+        CheckBox sheepsMovementCheckBox = new CheckBox("Déplacement intelligent");
+
+
+        HBox wolvesMovementBox = new HBox(wolvesMovementCheckBox);
+        HBox sheepsMovementBox = new HBox(sheepsMovementCheckBox);
 
         wolvesMovementBox.setSpacing(10);
         wolvesMovementBox.setAlignment(CENTER_LEFT);
         sheepsMovementBox.setSpacing(10);
         sheepsMovementBox.setAlignment(CENTER_LEFT);
 
-        sheepsMovementSelector.setOnAction(e -> {
-            String smartMovement = sheepsMovementSelector.getValue();
-            Ecosystem.SmartMovementSheeps = smartMovement.contentEquals("Oui");
+        sheepsMovementCheckBox.setOnAction(e -> {
+            boolean smartMovement = sheepsMovementCheckBox.isSelected();
+            Ecosystem.SmartMovementSheeps = smartMovement;
             System.out.println(Ecosystem.SmartMovementSheeps);
         });
 
-        wolvesMovementSelector.setOnAction(e -> {
-            String smartMovement = wolvesMovementSelector.getValue();
-            Ecosystem.SmartMovementWolves = smartMovement.contentEquals("Oui");
+        wolvesMovementCheckBox.setOnAction(e -> {
+            boolean smartMovement = wolvesMovementCheckBox.isSelected();
+            Ecosystem.SmartMovementWolves = smartMovement;
             System.out.println(Ecosystem.SmartMovementWolves);
-
         });
 
 
@@ -103,6 +117,9 @@ public class Main extends Application {
         sheepsContainer.setSpacing(10); // Espacement entre le libellé et le champ pour les moutons
 
         menuLayout.getChildren().addAll(wolvesContainer, sheepsContainer, startButton);
+        wolvesContainer.getStyleClass().add("menu");
+        sheepsContainer.getStyleClass().add("menu");
+
 
         // Ajout de séparateurs et d'espacements
         menuLayout.setSpacing(20); // Espacement entre les éléments
@@ -110,7 +127,9 @@ public class Main extends Application {
 
         menuLayout.setAlignment(CENTER); // Centrage des éléments dans le VBox
 
-        menu = new Scene(menuLayout, 800, 500);
+        menuContainer.getChildren().addAll(backgroundImageView, menuLayout);
+
+        menu = new Scene(menuContainer, 800, 500);
 
         // Charge le fichier CSS
         menu.getStylesheets().add("style.css");
