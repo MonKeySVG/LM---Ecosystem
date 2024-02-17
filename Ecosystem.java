@@ -121,7 +121,7 @@ public class Ecosystem {
                     sheep.foodCheck();
 
                     if (sheep.alive) {
-                        sheep.move();
+                        sheep.move(universe);
 
                         sheep.eatGrass(this);
 
@@ -168,7 +168,7 @@ public class Ecosystem {
                             newUniverse[chosenSheep.x][chosenSheep.y] = wolf;
                             wolf.lastEaten = 0;
                         } else {
-                            wolf.move();
+                            wolf.move(universe);
                             int newX = wolf.getX();
                             int newY = wolf.getY();
                             // Assurer que la nouvelle position est dans les limites de l'écosystème

@@ -32,4 +32,44 @@ public class Sheep extends Animal {
 
         this.lastEaten = 0;
     }
+
+    public Wolf findNearestWolf(Animal[][] ecosystem) {
+        Wolf nearestWolf = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for (int i = 0; i < Ecosystem.WIDTH; i++) {
+            for (int j = 0; j < Ecosystem.HEIGHT; j++) {
+                if (ecosystem[i][j] instanceof Wolf) {
+                    double distance = Math.sqrt(Math.pow(this.x - i, 2) + Math.pow(this.y - j, 2));
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        nearestWolf = (Wolf) ecosystem[i][j];
+                    }
+                }
+            }
+        }
+
+        return nearestWolf;
+    }
+
+    public void move(Animal[][] ecosystem) {
+        Wolf nearestWolf = findNearestWolf(ecosystem);
+        if (nearestWolf != null) {
+            int deltaX = this.x - nearestWolf.getX();
+            int deltaY = this.y - nearestWolf.getY();
+
+            // Déplacer le mouton dans la direction opposée au loup
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                this.x += Integer.signum(deltaX);
+            } else {
+                this.y += Integer.signum(deltaY);
+            }
+        } else {
+            super.move(); // Appel à la méthode de déplacement originale si aucun loup n'est trouvé
+        }
+
+        // Assurez-vous que le mouton reste dans les limites de l'écosystème
+        this.x = Math.max(0, Math.min(this.x, Ecosystem.WIDTH - 1));
+        this.y = Math.max(0, Math.min(this.y, Ecosystem.HEIGHT - 1));
+    }
 }
