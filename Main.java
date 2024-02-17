@@ -25,6 +25,7 @@ import static javafx.geometry.Pos.*;
 
 public class Main extends Application {
 
+
     private Scene menu, simulation;
     public Ecosystem ecosystem;
     private Canvas canvas;
@@ -47,6 +48,7 @@ public class Main extends Application {
 
         // Ajout des éléments du menu
         Button startButton = new Button("Start");
+        startButton.getStyleClass().add("button");
 
         TextField wolvesInput = new TextField(); // Champ de texte pour le nombre de loups
         wolvesInput.setText("250"); // Définit la valeur par défaut à "50"
@@ -110,6 +112,8 @@ public class Main extends Application {
 
         menu = new Scene(menuLayout, 800, 500);
 
+        // Charge le fichier CSS
+        menu.getStylesheets().add("style.css");
 
 
 
