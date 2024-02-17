@@ -49,7 +49,9 @@ public class Main extends Application {
         Button startButton = new Button("Start");
 
         TextField wolvesInput = new TextField(); // Champ de texte pour le nombre de loups
+        wolvesInput.setText("250"); // Définit la valeur par défaut à "50"
         TextField sheepsInput = new TextField(); // Champ de texte pour le nombre de moutons
+        sheepsInput.setText("250"); // Définit la valeur par défaut à "50"
         Label wolvesInputLabel = new Label("Nombre de loups : "); // Libellé pour le champ de texte des loups
         Label sheepsInputLabel = new Label("Nombre de moutons : "); // Libellé pour le champ de texte des moutons
 
@@ -85,13 +87,9 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         root.setLeft(canvas);
 
-        VBox vbox = new VBox();
-        vbox.setMinWidth(300);
-        vbox.setMaxWidth(300);
-        vbox.setMinHeight(500);
-        vbox.setMaxHeight(500);
-        vbox.setPadding(new Insets(10));
-        vbox.setSpacing(5);
+
+
+
 
 
         wolvesLabel = new Label("Nombre de loups: ");
@@ -131,9 +129,29 @@ public class Main extends Application {
             }
         });
 
-        vbox.getChildren().addAll(wolvesLabel, sheepsLabel);
-        vbox.getChildren().add(speedSelector);
-        root.setRight(vbox);
+
+        // Box pour afficher le nombre d'animaux en temps réel
+        VBox labelsVBox = new VBox();
+        labelsVBox.setMinWidth(300);
+        labelsVBox.setMaxWidth(300);
+
+        labelsVBox.setMinHeight(200);
+        labelsVBox.setSpacing(5);
+
+        labelsVBox.getChildren().addAll(wolvesLabel, sheepsLabel);
+        VBox speedSelectorVBox = new VBox();
+        speedSelectorVBox.setMinHeight(100);
+        speedSelectorVBox.getChildren().add(speedSelector);
+        speedSelectorVBox.setAlignment(BOTTOM_LEFT);
+
+        VBox spaceVBox = new VBox();
+        spaceVBox.setMinHeight(200);
+        VBox mainVBox = new VBox();
+        mainVBox.getChildren().addAll(labelsVBox, spaceVBox, speedSelectorVBox);
+        mainVBox.setMinHeight(500);
+        labelsVBox.setPadding(new Insets(10));
+        speedSelectorVBox.setPadding(new Insets(10));
+        root.setRight(mainVBox);
 
         simulation = new Scene(root, 800, 500);
         simulation.setFill(Color.LIGHTGRAY);
