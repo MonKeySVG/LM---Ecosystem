@@ -34,6 +34,9 @@ public class Main extends Application {
 
     private int simulationSpeed = 2;
 
+    public boolean SmartMovementSheeps = false;
+    public boolean SmartMovementWolves = false;
+
 
 
 
@@ -99,6 +102,7 @@ public class Main extends Application {
         ComboBox<Integer> speedSelector = new ComboBox<>();
         speedSelector.getItems().addAll(1, 2, 3, 4, 5, 6);
         speedSelector.setValue(1);
+        Label speedLabel = new Label("Vitesse");
 
         speedSelector.setOnAction(e -> {
             int selectedSpeed = speedSelector.getValue();
@@ -127,6 +131,9 @@ public class Main extends Application {
             }
         });
 
+        VBox speedSelectorBox = new VBox();
+        speedSelectorBox.getChildren().addAll(speedLabel, speedSelector);
+
         Button menuButton = new Button("Menu");
 
 
@@ -136,21 +143,19 @@ public class Main extends Application {
         labelsVBox.setMinWidth(300);
         labelsVBox.setMaxWidth(300);
 
-        labelsVBox.setMinHeight(200);
         labelsVBox.setSpacing(5);
 
         labelsVBox.getChildren().addAll(wolvesLabel, sheepsLabel);
         HBox bottomHBox = new HBox();
-        bottomHBox.setMinHeight(100);
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        bottomHBox.getChildren().addAll(speedSelector, spacer, menuButton);
+        bottomHBox.getChildren().addAll(speedSelectorBox, spacer, menuButton);
         bottomHBox.setAlignment(BOTTOM_LEFT);
 
-        VBox spaceVBox = new VBox();
-        spaceVBox.setMinHeight(200);
+        Region Vspacer = new Region();
+        VBox.setVgrow(Vspacer, Priority.ALWAYS);
         VBox mainVBox = new VBox();
-        mainVBox.getChildren().addAll(labelsVBox, spaceVBox, bottomHBox);
+        mainVBox.getChildren().addAll(labelsVBox, Vspacer, bottomHBox);
         mainVBox.setMinHeight(500);
         labelsVBox.setPadding(new Insets(10));
         bottomHBox.setPadding(new Insets(10));
