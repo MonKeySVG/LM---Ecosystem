@@ -25,6 +25,13 @@ import javafx.scene.image.ImageView;
 
 public class Main extends Application {
 
+    // Colors
+    Color darkColor = Color.rgb(15, 30, 37);
+    Color grassColor = Color.rgb(200, 230, 144);
+
+
+
+
 
     private Scene menu, simulation;
     public Ecosystem ecosystem;
@@ -50,7 +57,7 @@ public class Main extends Application {
 
         ImageView backgroundImageView = new ImageView();
 
-        // Chargez l'image depuis un fichier ou une ressource
+        // Charger l'image de fond depuis un fichier
         Image backgroundImage = new Image("assets/bg.jpg");
 
         backgroundImageView.setImage(backgroundImage);
@@ -136,6 +143,7 @@ public class Main extends Application {
 
 
 
+
         // Ajout des éléments de la simulation
 
         canvas = new Canvas(500, 500);
@@ -212,12 +220,16 @@ public class Main extends Application {
         VBox mainVBox = new VBox();
         mainVBox.getChildren().addAll(labelsVBox, Vspacer, bottomHBox);
         mainVBox.setMinHeight(500);
+
+        mainVBox.getStyleClass().add("simulationSidebar");
+
         labelsVBox.setPadding(new Insets(10));
         bottomHBox.setPadding(new Insets(10));
         root.setRight(mainVBox);
 
         simulation = new Scene(root, 800, 500);
-        simulation.setFill(Color.LIGHTGRAY);
+        simulation.getStylesheets().add("style.css");
+
         primaryStage.setTitle("Simulation d'Écosystème");
 
 
@@ -274,10 +286,10 @@ public class Main extends Application {
 
                 // Dessiner l'état de l'herbe
                 if (herbes[i][j].isEaten()) {
-                    gc.setFill(Color.WHITE);
+                    gc.setFill(darkColor);
                     gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
                 } else {
-                    gc.setFill(Color.GREEN);
+                    gc.setFill(grassColor);
                     gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize);
                 }
 

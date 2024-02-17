@@ -34,3 +34,7 @@
     -fx-text-fill: rgb(200, 230, 144);
     -fx-font-weight: 600;
 }
+
+.simulationSidebar {
+    -fx-background-color: rgb(15, 30, 37);
+}
