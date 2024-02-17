@@ -109,6 +109,23 @@ public abstract class Animal {
         return false;
     }
 
+    public boolean hasMaleAdjacentSheep(Animal[][] ecosystem) {
+        // Vérifiez si un mouton est présent sur une case adjacente
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (i >= 0 && i < Ecosystem.WIDTH && j >= 0 && j < Ecosystem.HEIGHT && !(i == x && j == y)) {
+                    // Vérifiez si la case adjacente contient un mouton
+                    if (ecosystem[i][j] instanceof Sheep sheep) {
+                        if (sheep.male) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean hasAdjacentWolf(Animal[][] ecosystem) {
         // Vérifiez si un loup est présent sur une case adjacente
         for (int i = x - 1; i <= x + 1; i++) {
@@ -117,6 +134,23 @@ public abstract class Animal {
                     // Vérifiez si la case adjacente contient un mouton
                     if (ecosystem[i][j] instanceof Wolf) {
                         return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean hasMaleAdjacentWolf(Animal[][] ecosystem) {
+        // Vérifiez si un loup est présent sur une case adjacente
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (i >= 0 && i < Ecosystem.WIDTH && j >= 0 && j < Ecosystem.HEIGHT && !(i == x && j == y)) {
+                    // Vérifiez si la case adjacente contient un mouton
+                    if (ecosystem[i][j] instanceof Wolf wolf) {
+                        if (wolf.male) {
+                            return true;
+                        }
                     }
                 }
             }

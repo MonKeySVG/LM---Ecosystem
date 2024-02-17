@@ -11,8 +11,8 @@ public class Ecosystem {
     private Random random = new Random();
 
     // Nombre initial de loups et de moutons
-    private static final int NUM_WOLVES = 30;
-    private static final int NUM_SHEEPS = 10;
+    private static final int NUM_WOLVES = 300;
+    private static final int NUM_SHEEPS = 300;
 
     private Grass[][] grass;
 
@@ -139,7 +139,7 @@ public class Ecosystem {
                             newUniverse[i][j] = sheep; // Remettre le mouton à sa position actuelle
                         }
 
-                        if (sheep.hasAdjacentSheep(universe) && random.nextInt(10) == 0) {
+                        if (sheep.hasMaleAdjacentSheep(universe) && !sheep.male) {
                             Sheep newSheep = sheep.reproduce();
                             // Vérifier si la cellule n'est pas déjà occupée
                             if (newSheep.getX() >= 0 && newSheep.getX() < WIDTH && newSheep.getY() >= 0 && newSheep.getY() < HEIGHT && !cellLock[newSheep.getX()][newSheep.getY()]) {
@@ -186,7 +186,7 @@ public class Ecosystem {
 
                         }
 
-                        if (wolf.hasAdjacentWolf(universe) && random.nextInt(10) == 0) {
+                        if (wolf.hasMaleAdjacentWolf(universe) && !wolf.male) {
                             Wolf newWolf = wolf.reproduce();
                             // Vérifier si la cellule n'est pas déjà occupée
                             if (newWolf.getX() >= 0 && newWolf.getX() < WIDTH && newWolf.getY() >= 0 && newWolf.getY() < HEIGHT && !cellLock[newWolf.getX()][newWolf.getY()]) {
