@@ -34,8 +34,7 @@ public class Main extends Application {
 
     private int simulationSpeed = 2;
 
-    public boolean SmartMovementSheeps = false;
-    public boolean SmartMovementWolves = false;
+
 
 
 
@@ -56,14 +55,47 @@ public class Main extends Application {
         Label wolvesInputLabel = new Label("Nombre de loups : "); // Libellé pour le champ de texte des loups
         Label sheepsInputLabel = new Label("Nombre de moutons : "); // Libellé pour le champ de texte des moutons
 
+        Label wolvesMovement = new Label("Déplacement intelligent : ");
+        Label sheepsMovement = new Label("Déplacement intelligent : ");
+
+        ComboBox<String> wolvesMovementSelector = new ComboBox<>();
+        wolvesMovementSelector.getItems().addAll("Oui", "Non");
+        wolvesMovementSelector.setValue("Non");
+
+        ComboBox<String> sheepsMovementSelector = new ComboBox<>();
+        sheepsMovementSelector.getItems().addAll("Oui", "Non");
+        sheepsMovementSelector.setValue("Non");
+
+
+        HBox wolvesMovementBox = new HBox(wolvesMovement, wolvesMovementSelector);
+        HBox sheepsMovementBox = new HBox(sheepsMovement, sheepsMovementSelector);
+
+        wolvesMovementBox.setSpacing(10);
+        wolvesMovementBox.setAlignment(CENTER_LEFT);
+        sheepsMovementBox.setSpacing(10);
+        sheepsMovementBox.setAlignment(CENTER_LEFT);
+
+        sheepsMovementSelector.setOnAction(e -> {
+            String smartMovement = sheepsMovementSelector.getValue();
+            Ecosystem.SmartMovementSheeps = smartMovement.contentEquals("Oui");
+            System.out.println(Ecosystem.SmartMovementSheeps);
+        });
+
+        wolvesMovementSelector.setOnAction(e -> {
+            String smartMovement = wolvesMovementSelector.getValue();
+            Ecosystem.SmartMovementWolves = smartMovement.contentEquals("Oui");
+            System.out.println(Ecosystem.SmartMovementWolves);
+
+        });
+
 
         VBox menuLayout = new VBox(); // Utilisez un VBox pour organiser les éléments verticalement
 
         VBox wolvesContainer = new VBox();
         VBox sheepsContainer = new VBox();
 
-        wolvesContainer.getChildren().addAll(wolvesInputLabel, wolvesInput);
-        sheepsContainer.getChildren().addAll(sheepsInputLabel, sheepsInput);
+        wolvesContainer.getChildren().addAll(wolvesInputLabel, wolvesInput, wolvesMovementBox);
+        sheepsContainer.getChildren().addAll(sheepsInputLabel, sheepsInput, sheepsMovementBox);
 
         wolvesContainer.setSpacing(10); // Espacement entre le libellé et le champ pour les loups
         sheepsContainer.setSpacing(10); // Espacement entre le libellé et le champ pour les moutons

@@ -22,6 +22,9 @@ public class Ecosystem {
 
     static boolean[][] fertilizer;
 
+    public static boolean SmartMovementSheeps = false;
+    public static boolean SmartMovementWolves = false;
+
     public Ecosystem(int width, int height) {
 
         // Nouvelle matrice contenant des éléments de type "Animal"
@@ -121,7 +124,12 @@ public class Ecosystem {
                     sheep.foodCheck();
 
                     if (sheep.alive) {
-                        sheep.move();
+                        if (SmartMovementSheeps) {
+                            sheep.move(universe);
+                        } else {
+                            sheep.move();
+                        }
+
 
                         sheep.eatGrass(this);
 
@@ -168,7 +176,12 @@ public class Ecosystem {
                             newUniverse[chosenSheep.x][chosenSheep.y] = wolf;
                             wolf.lastEaten = 0;
                         } else {
-                            wolf.move(universe);
+                            if (SmartMovementWolves) {
+                                wolf.move(universe);
+                            } else {
+                                wolf.move();
+                            }
+
                             int newX = wolf.getX();
                             int newY = wolf.getY();
                             // Assurer que la nouvelle position est dans les limites de l'écosystème
