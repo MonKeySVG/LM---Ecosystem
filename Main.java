@@ -21,7 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
-
 import static javafx.geometry.Pos.*;
 
 
