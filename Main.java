@@ -1,6 +1,6 @@
 // Pour compiler :
-// javac --module-path /Users/reda/IntelliJProjects/JavaFX/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml Animal.java Sheep.java Wolf.java Grass.java Ecosystem.java Main.java
-// java --module-path /Users/reda/IntelliJProjects/JavaFX/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml Main
+// javac --module-path /Users/reda/IntelliJProjects/JavaFX/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.media Animal.java Sheep.java Wolf.java Grass.java Ecosystem.java Main.java
+// java --module-path /Users/reda/IntelliJProjects/JavaFX/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml,javafx.media Main
 
 // Remplacer le chemin vers le dossier lib de la librairie javafx par pour qu'il corresponde à l'emplacement de votre dossier lib sur votre machine
 
@@ -62,6 +62,9 @@ public class Main extends Application {
 
 
 
+    // Elements pour l'écran stats
+    private Label totalWolvesDeadLabel;
+    private Label totalSheepsDeadLabel;
 
 
 
@@ -356,12 +359,6 @@ public class Main extends Application {
 
 
 
-
-
-        /*// Création de la scène pour afficher les statistiques
-        stats = new Scene(root, 800, 500);*/
-
-
         // Scène de départ
         primaryStage.setScene(menu);
         primaryStage.show();
@@ -401,7 +398,10 @@ public class Main extends Application {
             }.start();
         });
 
-        menuButton.setOnAction(e -> primaryStage.setScene(menu));
+        menuButton.setOnAction(e -> {
+            showStats();
+            primaryStage.setScene(stats);
+        });
 
 
         canvas.setOnMouseClicked(event -> {
@@ -489,6 +489,18 @@ public class Main extends Application {
         wolvesLabel.setText("Nombre de loups: " + ecosystem.getNumWolves());
         sheepsLabel.setText("Nombre de moutons: " + ecosystem.getNumSheeps());
         numTurnLabel.setText("Tour numéro : " + ecosystem.getNumTurn());
+    }
+
+    private void showStats() {
+        totalWolvesDeadLabel = new Label("Nombre total de loups morts : " + ecosystem.getTotalWolvesDead());
+        totalSheepsDeadLabel = new Label("Nombre total de moutons morts : " + ecosystem.getTotalSheepsDead());
+
+        System.out.print("Nombre total de loups morts : " + ecosystem.getTotalWolvesDead());
+
+        VBox statsBox = new VBox();
+        statsBox.getChildren().addAll(totalWolvesDeadLabel, totalSheepsDeadLabel);
+
+        stats = new Scene(statsBox, 800, 500);
     }
 
     public static void main(String[] args) {
