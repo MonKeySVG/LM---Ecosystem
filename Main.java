@@ -78,6 +78,7 @@ public class Main extends Application {
 
 
 
+        ImageView pauseIcon = new ImageView(new Image("assets/pauseButton.png"));
 
 
 
@@ -174,17 +175,19 @@ public class Main extends Application {
         sheepsLabel.getStyleClass().add("simulationText");
 
 
-
+        Rectangle grassRectangle = new Rectangle(20, 20, grassColor);
         Rectangle maleWolf = new Rectangle(20, 20, maleWolfColor);
         Rectangle femaleWolf = new Rectangle(20, 20, femaleWolfColor);
         Rectangle maleSheep = new Rectangle(20, 20, maleSheepColor);
         Rectangle femaleSheep = new Rectangle(20, 20, femaleSheepColor);
 
+        Label legendGrass = new Label("Herbe");
         Label legendMaleWolf = new Label("Loup Male");
         Label legendFemaleWolf = new Label("Loup Femelle");
         Label legendMaleSheep = new Label("Mouton Male");
         Label legendFemaleSheep = new Label("Mouton Femelle");
 
+        legendGrass.getStyleClass().add("simulationText");
         legendMaleWolf.getStyleClass().add("simulationText");
         legendFemaleWolf.getStyleClass().add("simulationText");
         legendMaleSheep.getStyleClass().add("simulationText");
@@ -192,16 +195,19 @@ public class Main extends Application {
 
         VBox colorLegendBox = new VBox();
 
+        HBox grassRectangleBox = new HBox(grassRectangle, legendGrass);
         HBox maleWolfBox = new HBox(maleWolf, legendMaleWolf);
         HBox femaleWolfBox = new HBox(femaleWolf, legendFemaleWolf);
         HBox maleSheepBox = new HBox(maleSheep, legendMaleSheep);
         HBox femaleSheepBox = new HBox(femaleSheep, legendFemaleSheep);
 
+        grassRectangleBox.setAlignment(CENTER_LEFT);
         maleWolfBox.setAlignment(CENTER_LEFT);
         femaleWolfBox.setAlignment(CENTER_LEFT);
         maleSheepBox.setAlignment(CENTER_LEFT);
         femaleSheepBox.setAlignment(CENTER_LEFT);
 
+        grassRectangleBox.setSpacing(10);
         maleWolfBox.setSpacing(10);
         femaleWolfBox.setSpacing(10);
         maleSheepBox.setSpacing(10);
@@ -209,6 +215,7 @@ public class Main extends Application {
 
 
         colorLegendBox.getChildren().addAll(
+                grassRectangleBox,
                 maleWolfBox,
                 femaleWolfBox,
                 maleSheepBox,
@@ -306,6 +313,10 @@ public class Main extends Application {
 
         // Gestionnaire d'événements du bouton "Start"
         startButton.setOnAction(e -> {
+            isPaused = false;
+            canvas.setOpacity(1);
+            simulationPane.getChildren().remove(pauseIcon);
+
             int numWolves = Integer.parseInt(wolvesInput.getText());
             int numSheeps = Integer.parseInt(sheepsInput.getText());
 
@@ -339,7 +350,6 @@ public class Main extends Application {
             primaryStage.setScene(menu);
         });
 
-        ImageView pauseIcon = new ImageView(new Image("assets/pauseButton.png"));
 
         canvas.setOnMouseClicked(event -> {
 
