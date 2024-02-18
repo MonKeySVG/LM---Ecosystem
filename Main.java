@@ -6,6 +6,7 @@
 
 
 
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -210,10 +211,10 @@ public class Main extends Application {
 
 
         Rectangle grassRectangle = new Rectangle(20, 20, grassColor);
-        Rectangle maleWolf = new Rectangle(20, 20, maleWolfColor);
-        Rectangle femaleWolf = new Rectangle(20, 20, femaleWolfColor);
-        Rectangle maleSheep = new Rectangle(20, 20, maleSheepColor);
-        Rectangle femaleSheep = new Rectangle(20, 20, femaleSheepColor);
+        Circle maleWolf = new Circle(10, maleWolfColor);
+        Circle femaleWolf = new Circle(10, femaleWolfColor);
+        Circle maleSheep = new Circle(10, maleSheepColor);
+        Circle femaleSheep = new Circle(10, femaleSheepColor);
 
         Label legendGrass = new Label("Herbe");
         Label legendMaleWolf = new Label("Loup Male");
