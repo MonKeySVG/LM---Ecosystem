@@ -60,12 +60,9 @@ public class Main extends Application {
 
     private MediaPlayer mediaPlayer;
 
+    private Button menuButton = new Button("Menu");
 
-
-    // Elements pour l'écran stats
-    private Label totalWolvesDeadLabel;
-    private Label totalSheepsDeadLabel;
-
+    private Button startButton = new Button("Start");
 
 
     @Override
@@ -100,6 +97,7 @@ public class Main extends Application {
 
 
 
+
         StackPane menuContainer = new StackPane();
 
         VBox borderMenu = new VBox();
@@ -124,7 +122,7 @@ public class Main extends Application {
 
 
         // Ajout des éléments du menu
-        Button startButton = new Button("Start");
+
 
         TextField wolvesInput = new TextField(); // Champ de texte pour le nombre de loups
         wolvesInput.setText("250"); // Définit la valeur par défaut à "50"
@@ -318,7 +316,7 @@ public class Main extends Application {
         VBox speedSelectorBox = new VBox();
         speedSelectorBox.getChildren().addAll(speedLabel, speedSelector);
 
-        Button menuButton = new Button("Menu");
+        Button statsButton = new Button("Stats");
 
 
 
@@ -333,7 +331,7 @@ public class Main extends Application {
         HBox bottomHBox = new HBox();
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        bottomHBox.getChildren().addAll(speedSelectorBox, spacer, menuButton);
+        bottomHBox.getChildren().addAll(speedSelectorBox, spacer, statsButton);
         bottomHBox.setAlignment(BOTTOM_LEFT);
 
         Region Vspacer1 = new Region();
@@ -398,9 +396,13 @@ public class Main extends Application {
             }.start();
         });
 
-        menuButton.setOnAction(e -> {
+        statsButton.setOnAction(e -> {
             showStats();
             primaryStage.setScene(stats);
+        });
+
+        menuButton.setOnAction(e -> {
+            primaryStage.setScene(menu);
         });
 
 
@@ -422,6 +424,7 @@ public class Main extends Application {
                 pauseIcon.setMouseTransparent(true);
             }
         });
+
 
 
 
@@ -492,13 +495,42 @@ public class Main extends Application {
     }
 
     private void showStats() {
-        totalWolvesDeadLabel = new Label("Nombre total de loups morts : " + ecosystem.getTotalWolvesDead());
-        totalSheepsDeadLabel = new Label("Nombre total de moutons morts : " + ecosystem.getTotalSheepsDead());
 
-        System.out.print("Nombre total de loups morts : " + ecosystem.getTotalWolvesDead());
+        // Nombre de tours
+        Label totalTurnsLabel = new Label("Nombre total de tours : " + ecosystem.getNumTurn());
+
+        // Nombre d'animaux vivants
+        Label aliveTitle = new Label("Nombre d'animaux vivants");
+
+        Label aliveWolves =  new Label("Nombre de loups vivants : " + ecosystem.getNumWolves());
+        Label aliveSheeps =  new Label("Nombre de moutons vivants : " + ecosystem.getNumSheeps());
+
+        // Nombre d'animaux morts au cours de la simulation
+        Label deadTitle = new Label("Nombre d'animaux morts");
+
+        Label totalWolvesDeadLabel = new Label("Nombre total de loups morts : " + ecosystem.getTotalWolvesDead());
+        Label totalSheepsDeadLabel = new Label("Nombre total de moutons morts : " + ecosystem.getTotalSheepsDead());
+
+
+
 
         VBox statsBox = new VBox();
-        statsBox.getChildren().addAll(totalWolvesDeadLabel, totalSheepsDeadLabel);
+
+        VBox turnBox = new VBox();
+        turnBox.getChildren().add(totalTurnsLabel);
+
+        VBox aliveBox = new VBox();
+        aliveBox.getChildren().addAll(aliveTitle, aliveWolves, aliveSheeps);
+
+        VBox deadBox = new VBox();
+        deadBox.getChildren().addAll(deadTitle, totalWolvesDeadLabel, totalSheepsDeadLabel);
+
+        HBox buttonsBox = new HBox();
+        buttonsBox.getChildren().add(menuButton);
+
+        statsBox.getChildren().addAll(turnBox, aliveBox, deadBox, buttonsBox);
+
+
 
         stats = new Scene(statsBox, 800, 500);
     }
