@@ -20,6 +20,8 @@ public class Ecosystem {
     private int numWolves;
     private int numSheeps;
 
+    private int numTurn;
+
     static boolean[][] fertilizer;
 
     public static boolean SmartMovementSheeps = false;
@@ -33,6 +35,8 @@ public class Ecosystem {
 
         numWolves = 0;
         numSheeps = 0;
+
+        numTurn = 0;
 
         // Placer les animaux à des emplacements aléatoires
         placeRandomAnimals(Wolf.class, NUM_WOLVES);
@@ -219,6 +223,8 @@ public class Ecosystem {
         universe = newUniverse;
         // Mettre à jour le nombre de loups et de moutons
         updateAnimalCounts();
+
+        numTurn++;
     }
 
 
@@ -248,6 +254,10 @@ public class Ecosystem {
 
     public int getNumSheeps() {
         return numSheeps;
+    }
+
+    public int getNumTurn() {
+        return numTurn;
     }
 
     public static void setNumWolves(int numWolves) {

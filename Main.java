@@ -52,6 +52,8 @@ public class Main extends Application {
     private Label wolvesLabel;
     private Label sheepsLabel;
 
+    private Label numTurnLabel;
+
     private int simulationSpeed = 2;
 
     private boolean isPaused = false;
@@ -208,6 +210,10 @@ public class Main extends Application {
 
 
 
+        numTurnLabel = new Label("Tour numéro : ");
+        numTurnLabel.getStyleClass().add("simulationText");
+
+
         wolvesLabel = new Label("Nombre de loups : ");
         sheepsLabel = new Label("Nombre de moutons : ");
 
@@ -318,7 +324,7 @@ public class Main extends Application {
 
         labelsVBox.setSpacing(5);
 
-        labelsVBox.getChildren().addAll(wolvesLabel, sheepsLabel);
+        labelsVBox.getChildren().addAll(numTurnLabel, wolvesLabel, sheepsLabel);
         HBox bottomHBox = new HBox();
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -471,6 +477,7 @@ public class Main extends Application {
         // Mettre à jour les valeurs affichées en temps réel
         wolvesLabel.setText("Nombre de loups: " + ecosystem.getNumWolves());
         sheepsLabel.setText("Nombre de moutons: " + ecosystem.getNumSheeps());
+        numTurnLabel.setText("Tour numéro : " + ecosystem.getNumTurn());
     }
 
     public static void main(String[] args) {
