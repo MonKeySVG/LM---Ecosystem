@@ -26,6 +26,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 
 public class Main extends Application {
@@ -58,6 +64,8 @@ public class Main extends Application {
 
     private boolean isPaused = false;
 
+    private boolean onStatsScene = false;
+
     private MediaPlayer mediaPlayer;
 
     private Button menuButton = new Button("Menu");
@@ -66,8 +74,35 @@ public class Main extends Application {
     private Button restartButton = new Button("Restart");
 
 
+
+
+    XYChart.Series<Number, Number> wolfSeries = new XYChart.Series<>();
+    XYChart.Series<Number, Number> sheepSeries = new XYChart.Series<>();
+
+    // Création des axes X et Y
+    NumberAxis xAxis = new NumberAxis();
+    NumberAxis yAxis = new NumberAxis();
+    LineChart<Number, Number> lineChart = new LineChart<>(xAxis, yAxis);
+
+
     @Override
     public void start(Stage primaryStage) {
+
+
+
+        // Création du graphique de ligne
+
+        lineChart.setTitle("Évolution du nombre d'animaux");
+        lineChart.setCreateSymbols(false); // Désactive les symboles pour les points de données
+
+        // Ajout des séries de données au graphique
+        lineChart.getData().addAll(wolfSeries, sheepSeries);
+
+
+
+
+
+
 
         ToggleButton musicButton = new ToggleButton("Musique: On");
         musicButton.setSelected(true);
@@ -368,6 +403,9 @@ public class Main extends Application {
             canvas.setOpacity(1);
             simulationPane.getChildren().remove(pauseIcon);
 
+            wolfSeries.getData().clear();
+            sheepSeries.getData().clear();
+
             int numWolves = Integer.parseInt(wolvesInput.getText());
             int numSheeps = Integer.parseInt(sheepsInput.getText());
 
@@ -384,11 +422,15 @@ public class Main extends Application {
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    if (!isPaused) {
+                    if (!onStatsScene && !isPaused) {
                         if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
                             ecosystem.update();
                             draw();
                             updateValues(); // Mettre à jour les valeurs en temps réel
+
+                            updateGraph(ecosystem.getNumTurn(), ecosystem.getNumWolves(), ecosystem.getNumSheeps());
+
+
                             lastUpdateTime = now;
                         }
                     }
@@ -398,18 +440,24 @@ public class Main extends Application {
         });
 
         statsButton.setOnAction(e -> {
+            onStatsScene = true;
             showStats();
             primaryStage.setScene(stats);
         });
 
         menuButton.setOnAction(e -> {
+            onStatsScene = false;
             primaryStage.setScene(menu);
         });
 
         restartButton.setOnAction(e -> {
+            onStatsScene = false;
             isPaused = false;
             canvas.setOpacity(1);
             simulationPane.getChildren().remove(pauseIcon);
+
+            wolfSeries.getData().clear();
+            sheepSeries.getData().clear();
 
             int numWolves = Integer.parseInt(wolvesInput.getText());
             int numSheeps = Integer.parseInt(sheepsInput.getText());
@@ -427,11 +475,15 @@ public class Main extends Application {
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    if (!isPaused) {
+                    if (!onStatsScene && !isPaused) {
                         if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
                             ecosystem.update();
                             draw();
                             updateValues(); // Mettre à jour les valeurs en temps réel
+
+                            updateGraph(ecosystem.getNumTurn(), ecosystem.getNumWolves(), ecosystem.getNumSheeps());
+
+
                             lastUpdateTime = now;
                         }
                     }
@@ -531,6 +583,8 @@ public class Main extends Application {
 
     private void showStats() {
 
+
+
         // Nombre de tours
         Label totalTurnsLabel = new Label("Nombre total de tours : " + ecosystem.getNumTurn());
 
@@ -560,18 +614,40 @@ public class Main extends Application {
         VBox deadBox = new VBox();
         deadBox.getChildren().addAll(deadTitle, totalWolvesDeadLabel, totalSheepsDeadLabel);
 
+        HBox animalsBox = new HBox();
+        animalsBox.getChildren().addAll(aliveBox, deadBox);
+
         HBox buttonsBox = new HBox();
         buttonsBox.getChildren().addAll(menuButton, restartButton);
 
-        statsBox.getChildren().addAll(turnBox, aliveBox, deadBox, buttonsBox);
+        statsBox.getChildren().addAll(turnBox, animalsBox, lineChart, buttonsBox);
+        turnBox.setAlignment(CENTER);
+        aliveBox.setAlignment(CENTER);
+        deadBox.setAlignment(CENTER);
+        animalsBox.setAlignment(CENTER);
+        buttonsBox.setAlignment(CENTER);
         statsBox.setAlignment(CENTER);
-        statsBox.setSpacing(50);
+
+        statsBox.getStyleClass().add("statsBox");
+        statsBox.setSpacing(20);
+
+        turnBox.setSpacing(10);
+        aliveBox.setSpacing(10);
+        deadBox.setSpacing(10);
+        animalsBox.setSpacing(10);
+        buttonsBox.setSpacing(10);
 
 
 
         stats = new Scene(statsBox, 800, 500);
 
         stats.getStylesheets().add("style.css");
+    }
+
+    private void updateGraph(int numTurn, int numWolves, int numSheeps) {
+        // Ajoute les données du tour actuel au graphique
+        wolfSeries.getData().add(new XYChart.Data<>(numTurn, numWolves));
+        sheepSeries.getData().add(new XYChart.Data<>(numTurn, numSheeps));
     }
 
     public static void main(String[] args) {

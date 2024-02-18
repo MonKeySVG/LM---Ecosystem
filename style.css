@@ -63,3 +63,7 @@
 .toggle-button:selected {
     -fx-background-color: rgb(200, 230, 144);
 }
+
+.test {
+    -fx-background-color: red;
+}
