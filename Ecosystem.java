@@ -22,6 +22,13 @@ public class Ecosystem {
 
     private int numTurn;
 
+    private int numTotalWolves;
+
+    private int numTotalSheeps;
+
+    private int totalWolvesDead;
+    private int totalSheepsDead;
+
     static boolean[][] fertilizer;
 
     public static boolean SmartMovementSheeps = false;
@@ -37,6 +44,10 @@ public class Ecosystem {
         numSheeps = 0;
 
         numTurn = 0;
+
+        totalSheepsDead = 0;
+
+        totalWolvesDead = 0;
 
         // Placer les animaux à des emplacements aléatoires
         placeRandomAnimals(Wolf.class, NUM_WOLVES);
@@ -162,6 +173,7 @@ public class Ecosystem {
                         }
                     } else {
                         sheep.die();
+                        registerDeath(sheep);
                     }
 
 
@@ -214,6 +226,7 @@ public class Ecosystem {
 
                     } else {
                         wolf.die();
+                        registerDeath(wolf);
                     }
 
                 }
@@ -267,4 +280,15 @@ public class Ecosystem {
     public static void setNumSheeps(int numSheeps) {
         NUM_SHEEPS = numSheeps;
     }
+
+    public void registerDeath(Animal animal) {
+        if (animal instanceof Wolf) {
+            totalWolvesDead++;
+        } else if (animal instanceof Sheep) {
+            totalSheepsDead++;
+        }
+    }
+
+    public int getTotalWolvesDead() { return totalWolvesDead; }
+    public int getTotalSheepsDead() { return totalSheepsDead; }
 }

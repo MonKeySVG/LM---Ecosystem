@@ -45,7 +45,7 @@ public class Main extends Application {
 
 
 
-    private Scene menu, simulation;
+    private Scene menu, simulation, stats;
     public Ecosystem ecosystem;
     private Canvas canvas;
     private long lastUpdateTime;
@@ -351,6 +351,13 @@ public class Main extends Application {
         simulation.getStylesheets().add("style.css");
 
         primaryStage.setTitle("Simulation d'Écosystème");
+
+
+
+
+
+        /*// Création de la scène pour afficher les statistiques
+        stats = new Scene(root, 800, 500);*/
 
 
         // Scène de départ
