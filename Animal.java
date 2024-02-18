@@ -14,7 +14,7 @@ public abstract class Animal {
 
 
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public Animal(int x, int y) {
         this.x = x;

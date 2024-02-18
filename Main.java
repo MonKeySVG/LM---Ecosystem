@@ -8,7 +8,6 @@
 
 import javafx.scene.shape.Rectangle;
 import javafx.application.Application;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -110,14 +109,12 @@ public class Main extends Application {
         sheepsMovementBox.setAlignment(CENTER_LEFT);
 
         sheepsMovementCheckBox.setOnAction(e -> {
-            boolean smartMovement = sheepsMovementCheckBox.isSelected();
-            Ecosystem.SmartMovementSheeps = smartMovement;
+            Ecosystem.SmartMovementSheeps = sheepsMovementCheckBox.isSelected();
             System.out.println(Ecosystem.SmartMovementSheeps);
         });
 
         wolvesMovementCheckBox.setOnAction(e -> {
-            boolean smartMovement = wolvesMovementCheckBox.isSelected();
-            Ecosystem.SmartMovementWolves = smartMovement;
+            Ecosystem.SmartMovementWolves = wolvesMovementCheckBox.isSelected();
             System.out.println(Ecosystem.SmartMovementWolves);
         });
 
@@ -346,9 +343,7 @@ public class Main extends Application {
             }.start();
         });
 
-        menuButton.setOnAction(e -> {
-            primaryStage.setScene(menu);
-        });
+        menuButton.setOnAction(e -> primaryStage.setScene(menu));
 
 
         canvas.setOnMouseClicked(event -> {
@@ -384,7 +379,7 @@ public class Main extends Application {
         Animal[][] universe = ecosystem.getUniverse();
         Grass[][] herbes = ecosystem.getGrass();
 
-        double tileSize = 500 / Ecosystem.HEIGHT;
+        double tileSize = (double) 500 / Ecosystem.HEIGHT;
 
         for (int i = 0; i < universe.length; i++) {
             for (int j = 0; j < universe[i].length; j++) {
@@ -400,8 +395,7 @@ public class Main extends Application {
 
 
                 // Dessiner les animaux
-                if (universe[i][j] instanceof Wolf) {
-                    Wolf wolf = (Wolf) universe[i][j];
+                if (universe[i][j] instanceof Wolf wolf) {
                     if (wolf.male) {
                         gc.setFill(maleWolfColor);
                     } else {
@@ -409,8 +403,7 @@ public class Main extends Application {
                     }
 
                     gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize); // Dessiner un loup
-                } else if (universe[i][j] instanceof Sheep) {
-                    Sheep sheep = (Sheep) universe[i][j];
+                } else if (universe[i][j] instanceof Sheep sheep) {
                     if (sheep.male) {
                         gc.setFill(maleSheepColor);
                     } else {

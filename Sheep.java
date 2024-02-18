@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Sheep extends Animal {
 
-    private Random random = new Random(); // Déclaration de la variable random
+    private final Random random = new Random(); // Déclaration de la variable random
     public Sheep(int x, int y) {
 
         super(x, y);

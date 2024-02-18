@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Wolf extends Animal {
-    private Random random = new Random(); // Déclaration de la variable random
+    private final Random random = new Random(); // Déclaration de la variable random
 
     public Wolf(int x, int y) {
         super(x, y);
