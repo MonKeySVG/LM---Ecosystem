@@ -626,7 +626,32 @@ public class Main extends Application {
         lineChart.setMaxWidth(600);
         lineChart.setPrefHeight(100);
 
-        statsBox.getChildren().addAll(turnBox, animalsBox, lineChart, buttonsBox);
+        HBox colorLegend = new HBox();
+        HBox wolfLegend = new HBox();
+        HBox sheepLegend = new HBox();
+
+        Rectangle sheepBoxLegend = new Rectangle(30, 10, maleSheepColor);
+        Label sheepTextLegend = new Label("Moutons");
+        sheepLegend.getChildren().addAll(sheepTextLegend, sheepBoxLegend);
+        sheepLegend.setAlignment(CENTER);
+        sheepLegend.setSpacing(10);
+
+
+        Rectangle wolfBoxLegend = new Rectangle(30, 10, femaleWolfColor);
+        Label wolfTextLegend = new Label("Loups");
+        wolfLegend.getChildren().addAll(wolfTextLegend, wolfBoxLegend);
+        wolfLegend.setAlignment(CENTER);
+        wolfLegend.setSpacing(10);
+
+
+        colorLegend.setAlignment(CENTER);
+        colorLegend.setSpacing(30);
+
+
+        colorLegend.getChildren().addAll(wolfLegend, sheepLegend);
+
+
+        statsBox.getChildren().addAll(turnBox, animalsBox, lineChart, colorLegend, buttonsBox);
         turnBox.setAlignment(CENTER);
         aliveBox.setAlignment(CENTER);
         deadBox.setAlignment(CENTER);
@@ -640,7 +665,7 @@ public class Main extends Application {
         turnBox.setSpacing(10);
         aliveBox.setSpacing(10);
         deadBox.setSpacing(10);
-        animalsBox.setSpacing(10);
+        animalsBox.setSpacing(30);
         buttonsBox.setSpacing(10);
 
 
