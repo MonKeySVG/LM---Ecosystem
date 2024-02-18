@@ -98,7 +98,8 @@ public class Main extends Application {
 
 
         // Ajout des séries de données au graphique
-        lineChart.getData().addAll(wolfSeries, sheepSeries);
+        lineChart.getData().add(wolfSeries);
+        lineChart.getData().add(sheepSeries);
 
 
 
