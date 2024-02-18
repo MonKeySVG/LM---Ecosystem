@@ -64,6 +64,80 @@
     -fx-background-color: rgb(200, 230, 144);
 }
 
+
+.statsBox {
+    -fx-background-color: rgb(15, 30, 37);
+}
+
+
+
+
+
+
+.chart-plot-background {
+    -fx-background-color: rgb(15, 30, 37);
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: rgb(200, 230, 144);
+    -fx-opacity: 0.1;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: rgb(200, 230, 144);
+    -fx-opacity: 0.1;
+}
+
+.axis {
+    -fx-font-size: 1.4em;
+    -fx-tick-label-fill: rgb(44, 98, 72);
+    -fx-font-family: Tahoma;
+    -fx-tick-length: 20;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-tick-mark {
+    -fx-stroke: rgb(200, 230, 144);
+    -fx-opacity: 0.2;
+}
+.axis-minor-tick-mark {
+    -fx-stroke: rgb(44, 98, 72);
+    -fx-opacity: 0.2;
+
+}
+
+.bigTitle {
+    -fx-text-fill: rgb(200, 230, 144);
+    -fx-font-size: 28px;
+    -fx-font-weight: 600;
+}
+
+.Title {
+    -fx-text-fill: rgb(200, 230, 144);
+    -fx-font-size: 20px;
+}
+
+.chart-title {
+    -fx-text-fill: rgb(200, 230, 144);
+    -fx-font-size: 20px;
+}
+
+.statsText {
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+/*.chart-alternative-row-fill {
+    -fx-fill: #99bcfd;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}*/
+
+
+
+
+
+
 /* Loups */
 .chart-series-line.series0 {
     -fx-stroke: rgb(255, 95, 93)

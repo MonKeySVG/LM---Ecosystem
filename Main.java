@@ -590,18 +590,29 @@ public class Main extends Application {
 
         // Nombre de tours
         Label totalTurnsLabel = new Label("Nombre total de tours : " + ecosystem.getNumTurn());
+        totalTurnsLabel.getStyleClass().add("bigTitle");
 
         // Nombre d'animaux vivants
         Label aliveTitle = new Label("Nombre d'animaux vivants");
+        aliveTitle.getStyleClass().add("Title");
 
         Label aliveWolves =  new Label("Nombre de loups vivants : " + ecosystem.getNumWolves());
+        aliveWolves.getStyleClass().add("statsText");
+
         Label aliveSheeps =  new Label("Nombre de moutons vivants : " + ecosystem.getNumSheeps());
+        aliveSheeps.getStyleClass().add("statsText");
+
 
         // Nombre d'animaux morts au cours de la simulation
         Label deadTitle = new Label("Nombre d'animaux morts");
+        deadTitle.getStyleClass().add("Title");
+
 
         Label totalWolvesDeadLabel = new Label("Nombre total de loups morts : " + ecosystem.getTotalWolvesDead());
+        totalWolvesDeadLabel.getStyleClass().add("statsText");
+
         Label totalSheepsDeadLabel = new Label("Nombre total de moutons morts : " + ecosystem.getTotalSheepsDead());
+        totalSheepsDeadLabel.getStyleClass().add("statsText");
 
 
 
@@ -632,6 +643,8 @@ public class Main extends Application {
 
         Rectangle sheepBoxLegend = new Rectangle(30, 10, maleSheepColor);
         Label sheepTextLegend = new Label("Moutons");
+        sheepTextLegend.getStyleClass().add("statsText");
+
         sheepLegend.getChildren().addAll(sheepTextLegend, sheepBoxLegend);
         sheepLegend.setAlignment(CENTER);
         sheepLegend.setSpacing(10);
@@ -639,6 +652,8 @@ public class Main extends Application {
 
         Rectangle wolfBoxLegend = new Rectangle(30, 10, femaleWolfColor);
         Label wolfTextLegend = new Label("Loups");
+        wolfTextLegend.getStyleClass().add("statsText");
+
         wolfLegend.getChildren().addAll(wolfTextLegend, wolfBoxLegend);
         wolfLegend.setAlignment(CENTER);
         wolfLegend.setSpacing(10);
@@ -665,8 +680,8 @@ public class Main extends Application {
         turnBox.setSpacing(10);
         aliveBox.setSpacing(10);
         deadBox.setSpacing(10);
-        animalsBox.setSpacing(30);
-        buttonsBox.setSpacing(10);
+        animalsBox.setSpacing(50);
+        buttonsBox.setSpacing(50);
 
 
 
