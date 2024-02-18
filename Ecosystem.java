@@ -8,13 +8,13 @@ public class Ecosystem {
     public static final int HEIGHT = 100;
 
     private Animal[][] universe;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     // Nombre initial de loups et de moutons
     private static int NUM_WOLVES = 300;
     private static int NUM_SHEEPS = 300;
 
-    private Grass[][] grass;
+    private final Grass[][] grass;
 
     // Variables pour afficher l'évolution du nombre de loups et de moutons
     private int numWolves;
@@ -118,8 +118,7 @@ public class Ecosystem {
 
 
 
-                if (universe[i][j] instanceof Sheep) {
-                    Sheep sheep = (Sheep) universe[i][j];
+                if (universe[i][j] instanceof Sheep sheep) {
                     sheep.age();
                     sheep.foodCheck();
 
@@ -164,8 +163,7 @@ public class Ecosystem {
 
                 }
 
-                if (universe[i][j] instanceof Wolf) {
-                    Wolf wolf = (Wolf) universe[i][j];
+                if (universe[i][j] instanceof Wolf wolf) {
                     wolf.age();
                     wolf.foodCheck();
 
@@ -229,11 +227,11 @@ public class Ecosystem {
         numWolves = 0;
         numSheeps = 0;
 
-        for (int i = 0; i < universe.length; i++) {
-            for (int j = 0; j < universe[i].length; j++) {
-                if (universe[i][j] instanceof Wolf) {
+        for (Animal[] animals : universe) {
+            for (Animal animal : animals) {
+                if (animal instanceof Wolf) {
                     numWolves++;
-                } else if (universe[i][j] instanceof Sheep) {
+                } else if (animal instanceof Sheep) {
                     numSheeps++;
                 }
             }
