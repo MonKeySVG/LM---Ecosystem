@@ -77,6 +77,8 @@ public class Main extends Application {
 
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
+        mediaPlayer.play();
+
         musicButton.setOnAction(event -> {
             if (musicButton.isSelected()) {
                 musicButton.setText("Musique: On");
@@ -93,7 +95,7 @@ public class Main extends Application {
 
         StackPane menuContainer = new StackPane();
 
-        BorderPane borderMenu = new BorderPane();
+        VBox borderMenu = new VBox();
 
         ImageView backgroundImageView = new ImageView();
 
@@ -169,11 +171,11 @@ public class Main extends Application {
 
         // Ajout de séparateurs et d'espacements
         menuLayout.setSpacing(20); // Espacement entre les éléments
-        menuLayout.setPadding(new Insets(200)); // Espacement autour des éléments
+        menuLayout.setPadding(new Insets(90, 200, 0, 200)); // Espacement autour des éléments
 
         menuLayout.setAlignment(CENTER); // Centrage des éléments dans le VBox
 
-        menuContainer.getChildren().addAll(backgroundImageView, borderMenu, menuLayout);
+        menuContainer.getChildren().addAll(backgroundImageView, borderMenu);
 
 
 
@@ -199,7 +201,10 @@ public class Main extends Application {
         VBox bottomLeftBox = new VBox();
         bottomLeftBox.getChildren().add(musicButton);
         bottomLeftBox.setPadding(new Insets(20));
-        borderMenu.setBottom(bottomLeftBox);
+        borderMenu.getChildren().addAll(menuLayout, bottomLeftBox);
+
+
+
 
 
 
