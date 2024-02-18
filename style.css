@@ -64,6 +64,16 @@
     -fx-background-color: rgb(200, 230, 144);
 }
 
+/* Loups */
+.chart-series-line.series0 {
+    -fx-stroke: rgb(255, 95, 93)
+}
+
+/* Moutons */
+.chart-series-line.series1 {
+    -fx-stroke: rgb(0, 204, 191)
+}
+
 .test {
     -fx-background-color: red;
 }

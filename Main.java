@@ -95,6 +95,8 @@ public class Main extends Application {
         lineChart.setTitle("Évolution du nombre d'animaux");
         lineChart.setCreateSymbols(false); // Désactive les symboles pour les points de données
 
+
+
         // Ajout des séries de données au graphique
         lineChart.getData().addAll(wolfSeries, sheepSeries);
 
@@ -620,7 +622,7 @@ public class Main extends Application {
         HBox buttonsBox = new HBox();
         buttonsBox.getChildren().addAll(menuButton, restartButton);
 
-        lineChart.setPrefWidth(400);
+        lineChart.setMaxWidth(600);
         lineChart.setPrefHeight(100);
 
         statsBox.getChildren().addAll(turnBox, animalsBox, lineChart, buttonsBox);
