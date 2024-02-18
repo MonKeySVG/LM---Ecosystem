@@ -620,6 +620,9 @@ public class Main extends Application {
         HBox buttonsBox = new HBox();
         buttonsBox.getChildren().addAll(menuButton, restartButton);
 
+        lineChart.setPrefWidth(400);
+        lineChart.setPrefHeight(100);
+
         statsBox.getChildren().addAll(turnBox, animalsBox, lineChart, buttonsBox);
         turnBox.setAlignment(CENTER);
         aliveBox.setAlignment(CENTER);
