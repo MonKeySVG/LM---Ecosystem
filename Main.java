@@ -426,6 +426,11 @@ public class Main extends Application {
                 @Override
                 public void handle(long now) {
                     if (!onStatsScene && !isPaused) {
+                        if (ecosystem.getNumWolves()==0 || ecosystem.getNumSheeps()==0) {
+                            onStatsScene = true;
+                            showStats();
+                            primaryStage.setScene(stats);
+                        }
                         if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
                             ecosystem.update();
                             draw();
@@ -479,6 +484,11 @@ public class Main extends Application {
                 @Override
                 public void handle(long now) {
                     if (!onStatsScene && !isPaused) {
+                        if (ecosystem.getNumWolves()==0 || ecosystem.getNumSheeps()==0) {
+                            onStatsScene = true;
+                            showStats();
+                            primaryStage.setScene(stats);
+                        }
                         if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
                             ecosystem.update();
                             draw();
