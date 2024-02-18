@@ -6,6 +6,7 @@
 
 
 
+import javafx.scene.shape.Rectangle;
 import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -29,6 +30,13 @@ public class Main extends Application {
     Color darkColor = Color.rgb(15, 30, 37);
     Color grassColor = Color.rgb(200, 230, 144);
 
+    Color maleSheepColor = Color.rgb(0, 204, 191);
+
+    Color femaleSheepColor = Color.rgb(114, 242, 235);
+
+    Color maleWolfColor = Color.rgb(161, 60, 58);
+    Color femaleWolfColor = Color.rgb(255, 95, 93);
+
 
 
 
@@ -42,6 +50,7 @@ public class Main extends Application {
 
     private int simulationSpeed = 2;
 
+    private boolean isPaused = false;
 
 
 
@@ -159,13 +168,65 @@ public class Main extends Application {
         wolvesLabel = new Label("Nombre de loups: ");
         sheepsLabel = new Label("Nombre de moutons: ");
 
-        wolvesLabel.setStyle("-fx-font-size: 20px;"); // Définir la taille de la police pour le label des loups
-        sheepsLabel.setStyle("-fx-font-size: 20px;"); // Définir la taille de la police pour le label des moutons
+        wolvesLabel.getStyleClass().add("simulationText");
+        sheepsLabel.getStyleClass().add("simulationText");
+
+
+
+        Rectangle maleWolf = new Rectangle(20, 20, maleWolfColor);
+        Rectangle femaleWolf = new Rectangle(20, 20, femaleWolfColor);
+        Rectangle maleSheep = new Rectangle(20, 20, maleSheepColor);
+        Rectangle femaleSheep = new Rectangle(20, 20, femaleSheepColor);
+
+        Label legendMaleWolf = new Label("Loup Male");
+        Label legendFemaleWolf = new Label("Loup Femelle");
+        Label legendMaleSheep = new Label("Mouton Male");
+        Label legendFemaleSheep = new Label("Mouton Femelle");
+
+        legendMaleWolf.getStyleClass().add("simulationText");
+        legendFemaleWolf.getStyleClass().add("simulationText");
+        legendMaleSheep.getStyleClass().add("simulationText");
+        legendFemaleSheep.getStyleClass().add("simulationText");
+
+        VBox colorLegendBox = new VBox();
+
+        HBox maleWolfBox = new HBox(maleWolf, legendMaleWolf);
+        HBox femaleWolfBox = new HBox(femaleWolf, legendFemaleWolf);
+        HBox maleSheepBox = new HBox(maleSheep, legendMaleSheep);
+        HBox femaleSheepBox = new HBox(femaleSheep, legendFemaleSheep);
+
+        maleWolfBox.setAlignment(CENTER_LEFT);
+        femaleWolfBox.setAlignment(CENTER_LEFT);
+        maleSheepBox.setAlignment(CENTER_LEFT);
+        femaleSheepBox.setAlignment(CENTER_LEFT);
+
+        maleWolfBox.setSpacing(10);
+        femaleWolfBox.setSpacing(10);
+        maleSheepBox.setSpacing(10);
+        femaleSheepBox.setSpacing(10);
+
+
+        colorLegendBox.getChildren().addAll(
+                maleWolfBox,
+                femaleWolfBox,
+                maleSheepBox,
+                femaleSheepBox
+        );
+
+        colorLegendBox.setSpacing(10);
+        colorLegendBox.setPadding(new Insets(10));
+
+
+
+
+
+
 
         ComboBox<Integer> speedSelector = new ComboBox<>();
         speedSelector.getItems().addAll(1, 2, 3, 4, 5, 6);
         speedSelector.setValue(1);
         Label speedLabel = new Label("Vitesse");
+        speedLabel.getStyleClass().add("simulationText");
 
         speedSelector.setOnAction(e -> {
             int selectedSpeed = speedSelector.getValue();
@@ -215,10 +276,14 @@ public class Main extends Application {
         bottomHBox.getChildren().addAll(speedSelectorBox, spacer, menuButton);
         bottomHBox.setAlignment(BOTTOM_LEFT);
 
-        Region Vspacer = new Region();
-        VBox.setVgrow(Vspacer, Priority.ALWAYS);
+        Region Vspacer1 = new Region();
+        VBox.setVgrow(Vspacer1, Priority.ALWAYS);
+
+        Region Vspacer2 = new Region();
+        VBox.setVgrow(Vspacer2, Priority.ALWAYS);
+
         VBox mainVBox = new VBox();
-        mainVBox.getChildren().addAll(labelsVBox, Vspacer, bottomHBox);
+        mainVBox.getChildren().addAll(labelsVBox, Vspacer1, colorLegendBox, Vspacer2, bottomHBox);
         mainVBox.setMinHeight(500);
 
         mainVBox.getStyleClass().add("simulationSidebar");
@@ -255,12 +320,15 @@ public class Main extends Application {
             new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
-                        ecosystem.update();
-                        draw();
-                        updateValues(); // Mettre à jour les valeurs en temps réel
-                        lastUpdateTime = now;
+                    if (!isPaused) {
+                        if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
+                            ecosystem.update();
+                            draw();
+                            updateValues(); // Mettre à jour les valeurs en temps réel
+                            lastUpdateTime = now;
+                        }
                     }
+
                 }
             }.start();
         });
@@ -268,7 +336,24 @@ public class Main extends Application {
         menuButton.setOnAction(e -> {
             primaryStage.setScene(menu);
         });
+
+        canvas.setOnMouseClicked(event -> {
+            if (isPaused) {
+                isPaused = false;
+                canvas.setOpacity(1);
+
+            } else {
+                isPaused = true;
+                canvas.setOpacity(0.5);
+            }
+        });
+
+
+
+
+
     }
+
 
 
 
@@ -298,18 +383,18 @@ public class Main extends Application {
                 if (universe[i][j] instanceof Wolf) {
                     Wolf wolf = (Wolf) universe[i][j];
                     if (wolf.male) {
-                        gc.setFill(Color.PURPLE);
+                        gc.setFill(maleWolfColor);
                     } else {
-                        gc.setFill(Color.RED);
+                        gc.setFill(femaleWolfColor);
                     }
 
                     gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize); // Dessiner un loup
                 } else if (universe[i][j] instanceof Sheep) {
                     Sheep sheep = (Sheep) universe[i][j];
                     if (sheep.male) {
-                        gc.setFill(Color.BLUE);
+                        gc.setFill(maleSheepColor);
                     } else {
-                        gc.setFill(Color.LIGHTBLUE);
+                        gc.setFill(femaleSheepColor);
                     }
 
                     gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize); // Dessiner un mouton

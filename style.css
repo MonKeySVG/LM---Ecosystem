@@ -1,7 +1,7 @@
 .button {
     -fx-background-color: rgb(200, 230, 144);
     -fx-text-fill: rgb(15, 30, 37);
-    -fx-font-weight: 900;
+    -fx-font-weight: 600;
     -fx-padding: 10px 20px;
     -fx-font-size: 20px;
 }
@@ -37,4 +37,16 @@
 
 .simulationSidebar {
     -fx-background-color: rgb(15, 30, 37);
+}
+
+.simulationText {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+
+.combo-box {
+    -fx-background-color: rgb(200, 230, 144);
+    -fx-padding: 4px 4px;
+    -fx-font-size: 20px;
 }
