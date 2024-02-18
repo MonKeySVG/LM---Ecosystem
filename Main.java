@@ -167,8 +167,8 @@ public class Main extends Application {
 
 
 
-        wolvesLabel = new Label("Nombre de loups: ");
-        sheepsLabel = new Label("Nombre de moutons: ");
+        wolvesLabel = new Label("Nombre de loups : ");
+        sheepsLabel = new Label("Nombre de moutons : ");
 
         wolvesLabel.getStyleClass().add("simulationText");
         sheepsLabel.getStyleClass().add("simulationText");
@@ -345,6 +345,7 @@ public class Main extends Application {
 
             pauseIcon.setFitWidth(50);
             pauseIcon.setFitHeight(50);
+            pauseIcon.setOpacity(0.8);
             if (isPaused) {
                 isPaused = false;
                 canvas.setOpacity(1);
