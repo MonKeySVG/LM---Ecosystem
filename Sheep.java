@@ -37,8 +37,8 @@ public class Sheep extends Animal {
         Wolf nearestWolf = null;
         double minDistance = Double.MAX_VALUE;
 
-        for (int i = 0; i < Ecosystem.WIDTH; i++) {
-            for (int j = 0; j < Ecosystem.HEIGHT; j++) {
+        for (int i = 0; i < Ecosystem.WIDTH / 20; i++) {
+            for (int j = 0; j < Ecosystem.HEIGHT / 20; j++) {
                 if (ecosystem[i][j] instanceof Wolf) {
                     double distance = Math.sqrt(Math.pow(this.x - i, 2) + Math.pow(this.y - j, 2));
                     if (distance < minDistance) {

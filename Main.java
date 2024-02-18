@@ -22,6 +22,10 @@ import static javafx.geometry.Pos.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+
 
 public class Main extends Application {
 
@@ -51,7 +55,7 @@ public class Main extends Application {
 
     private boolean isPaused = false;
 
-
+    private MediaPlayer mediaPlayer;
 
 
 
@@ -61,7 +65,34 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        ToggleButton musicButton = new ToggleButton("Musique: On");
+        musicButton.setSelected(true);
+
+        String musicFile = "assets/music.mp3";
+
+        Media sound = new Media(new File(musicFile).toURI().toString());
+
+        mediaPlayer = new MediaPlayer(sound);
+
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+
+        musicButton.setOnAction(event -> {
+            if (musicButton.isSelected()) {
+                musicButton.setText("Musique: On");
+                mediaPlayer.play();
+            } else {
+                musicButton.setText("Musique: Off");
+                mediaPlayer.pause();
+            }
+        });
+
+
+
+
+
         StackPane menuContainer = new StackPane();
+
+        BorderPane borderMenu = new BorderPane();
 
         ImageView backgroundImageView = new ImageView();
 
@@ -141,7 +172,9 @@ public class Main extends Application {
 
         menuLayout.setAlignment(CENTER); // Centrage des éléments dans le VBox
 
-        menuContainer.getChildren().addAll(backgroundImageView, menuLayout);
+        menuContainer.getChildren().addAll(backgroundImageView, borderMenu, menuLayout);
+
+
 
         menu = new Scene(menuContainer, 800, 500);
 
@@ -162,6 +195,10 @@ public class Main extends Application {
 
 
 
+        VBox bottomLeftBox = new VBox();
+        bottomLeftBox.getChildren().add(musicButton);
+        bottomLeftBox.setPadding(new Insets(20));
+        borderMenu.setBottom(bottomLeftBox);
 
 
 
@@ -402,7 +439,11 @@ public class Main extends Application {
                         gc.setFill(femaleWolfColor);
                     }
 
-                    gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize); // Dessiner un loup
+                    double centerX = i * tileSize + tileSize / 2; // Centre X du cercle
+                    double centerY = j * tileSize + tileSize / 2; // Centre Y du cercle
+                    double radius = tileSize / 2; // Rayon du cercle
+
+                    gc.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2); // Dessiner un loup
                 } else if (universe[i][j] instanceof Sheep sheep) {
                     if (sheep.male) {
                         gc.setFill(maleSheepColor);
@@ -410,7 +451,11 @@ public class Main extends Application {
                         gc.setFill(femaleSheepColor);
                     }
 
-                    gc.fillRect(i * tileSize, j * tileSize, tileSize, tileSize); // Dessiner un mouton
+                    double centerX = i * tileSize + tileSize / 2; // Centre X du cercle
+                    double centerY = j * tileSize + tileSize / 2; // Centre Y du cercle
+                    double radius = tileSize / 2; // Rayon du cercle
+
+                    gc.fillOval(centerX - radius, centerY - radius, radius * 2, radius * 2); // Dessiner un mouton
                 }
             }
         }
