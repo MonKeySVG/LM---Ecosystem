@@ -63,6 +63,7 @@ public class Main extends Application {
     private Button menuButton = new Button("Menu");
 
     private Button startButton = new Button("Start");
+    private Button restartButton = new Button("Restart");
 
 
     @Override
@@ -405,6 +406,40 @@ public class Main extends Application {
             primaryStage.setScene(menu);
         });
 
+        restartButton.setOnAction(e -> {
+            isPaused = false;
+            canvas.setOpacity(1);
+            simulationPane.getChildren().remove(pauseIcon);
+
+            int numWolves = Integer.parseInt(wolvesInput.getText());
+            int numSheeps = Integer.parseInt(sheepsInput.getText());
+
+            // Mettre à jour les nombres de loups et de moutons dans Ecosystem
+            Ecosystem.setNumWolves(numWolves);
+            Ecosystem.setNumSheeps(numSheeps);
+
+            ecosystem = new Ecosystem(100, 100);
+
+
+            primaryStage.setScene(simulation);
+            // Démarrage de la boucle d'animation ici
+            lastUpdateTime = System.nanoTime();
+            new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    if (!isPaused) {
+                        if (now - lastUpdateTime >= 1_000_000_000 / simulationSpeed) { // 2 mises a jour par secondes
+                            ecosystem.update();
+                            draw();
+                            updateValues(); // Mettre à jour les valeurs en temps réel
+                            lastUpdateTime = now;
+                        }
+                    }
+
+                }
+            }.start();
+        });
+
 
         canvas.setOnMouseClicked(event -> {
 
@@ -526,13 +561,17 @@ public class Main extends Application {
         deadBox.getChildren().addAll(deadTitle, totalWolvesDeadLabel, totalSheepsDeadLabel);
 
         HBox buttonsBox = new HBox();
-        buttonsBox.getChildren().add(menuButton);
+        buttonsBox.getChildren().addAll(menuButton, restartButton);
 
         statsBox.getChildren().addAll(turnBox, aliveBox, deadBox, buttonsBox);
+        statsBox.setAlignment(CENTER);
+        statsBox.setSpacing(50);
 
 
 
         stats = new Scene(statsBox, 800, 500);
+
+        stats.getStylesheets().add("style.css");
     }
 
     public static void main(String[] args) {
