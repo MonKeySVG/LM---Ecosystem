@@ -158,7 +158,9 @@ public class Main extends Application {
         canvas = new Canvas(500, 500);
 
         BorderPane root = new BorderPane();
-        root.setLeft(canvas);
+        StackPane simulationPane = new StackPane();
+        simulationPane.getChildren().add(canvas);
+        root.setLeft(simulationPane);
 
 
 
@@ -337,14 +339,21 @@ public class Main extends Application {
             primaryStage.setScene(menu);
         });
 
+        ImageView pauseIcon = new ImageView(new Image("assets/pauseButton.png"));
+
         canvas.setOnMouseClicked(event -> {
+
+            pauseIcon.setFitWidth(50);
+            pauseIcon.setFitHeight(50);
             if (isPaused) {
                 isPaused = false;
                 canvas.setOpacity(1);
-
+                simulationPane.getChildren().remove(pauseIcon);
             } else {
                 isPaused = true;
                 canvas.setOpacity(0.5);
+                simulationPane.getChildren().add(pauseIcon);
+                pauseIcon.setMouseTransparent(true);
             }
         });
 
