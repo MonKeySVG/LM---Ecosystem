@@ -79,6 +79,8 @@ public class Main extends Application {
 
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
+        mediaPlayer.setVolume(1);
+
         mediaPlayer.play();
 
         musicButton.setOnAction(event -> {
@@ -410,10 +412,12 @@ public class Main extends Application {
             if (isPaused) {
                 isPaused = false;
                 canvas.setOpacity(1);
+                mediaPlayer.setVolume(1);
                 simulationPane.getChildren().remove(pauseIcon);
             } else {
                 isPaused = true;
                 canvas.setOpacity(0.5);
+                mediaPlayer.setVolume(0.5);
                 simulationPane.getChildren().add(pauseIcon);
                 pauseIcon.setMouseTransparent(true);
             }
