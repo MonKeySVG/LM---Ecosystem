@@ -173,7 +173,7 @@ public class Ecosystem {
                         }
                     } else {
                         sheep.die();
-                        registerDeath(sheep);
+                        totalSheepsDead++;
                     }
 
 
@@ -189,6 +189,7 @@ public class Ecosystem {
                             Sheep chosenSheep = adjacentSheeps.get(random.nextInt(adjacentSheeps.size()));
                             newUniverse[chosenSheep.x][chosenSheep.y] = wolf;
                             wolf.lastEaten = 0;
+                            totalSheepsDead++;
                         } else {
                             if (SmartMovementWolves) {
                                 wolf.move(universe);
@@ -226,7 +227,7 @@ public class Ecosystem {
 
                     } else {
                         wolf.die();
-                        registerDeath(wolf);
+                        totalWolvesDead++;
                     }
 
                 }
@@ -281,13 +282,6 @@ public class Ecosystem {
         NUM_SHEEPS = numSheeps;
     }
 
-    public void registerDeath(Animal animal) {
-        if (animal instanceof Wolf) {
-            totalWolvesDead++;
-        } else if (animal instanceof Sheep) {
-            totalSheepsDead++;
-        }
-    }
 
     public int getTotalWolvesDead() { return totalWolvesDead; }
     public int getTotalSheepsDead() { return totalSheepsDead; }
