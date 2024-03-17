@@ -1,0 +1,52 @@
+.button {
+    -fx-background-color: rgb(200, 230, 144);
+    -fx-text-fill: rgb(15, 30, 37);
+    -fx-font-weight: 600;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 20px;
+}
+
+.menu {
+    -fx-background-color: rgb(15, 30, 37);
+    -fx-padding: 20px;
+    -fx-background-radius: 5px;
+}
+
+.menuLabel {
+    -fx-text-fill: rgb(200, 230, 144);
+    -fx-font-weight: 900;
+    -fx-font-size: 20px;
+}
+
+.check-box {
+    -fx-text-fill: rgb(44, 98, 72);
+}
+
+.check-box .box {
+    -fx-background-color: rgb(44, 98, 72);
+}
+
+
+
+
+.text-field {
+    -fx-background-color: rgb(44, 98, 72);
+    -fx-text-fill: rgb(200, 230, 144);
+    -fx-font-weight: 600;
+}
+
+.simulationSidebar {
+    -fx-background-color: rgb(15, 30, 37);
+}
+
+.simulationText {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
+
+.combo-box {
+    -fx-background-color: rgb(200, 230, 144);
+    -fx-padding: 4px 4px;
+    -fx-font-size: 20px;
+}
